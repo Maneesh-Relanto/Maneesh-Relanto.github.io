@@ -1,0 +1,27 @@
+# Confidential folder with sensitive files
+confidential/
+
+# Local configuration with secrets
+config.local.js
+
+# Personal/sensitive documents (additional protection)
+*resume*.txt
+*resume*.html
+*Resume*.html
+*CV*.pdf
+*cv*.pdf
+
+# Environment variables
+.env
+.env.local
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~

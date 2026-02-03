@@ -97,13 +97,17 @@
                         <span class="banner-value">11</span>
                         <span class="banner-label">Repositories</span>
                     </div>
-                    <div class="banner-stat">
-                        <span class="banner-value">23</span>
-                        <span class="banner-label">Pull Requests</span>
+                    <div class="banner-stat" id="total-prs-banner">
+                        <span class="banner-value">
+                            <span class="loading-dots">...</span>
+                        </span>
+                        <span class="banner-label">Total PRs</span>
                     </div>
-                    <div class="banner-stat">
-                        <span class="banner-value">293</span>
-                        <span class="banner-label">Jan '26 Commits</span>
+                    <div class="banner-stat" id="total-commits-banner">
+                        <span class="banner-value">
+                            <span class="loading-dots">...</span>
+                        </span>
+                        <span class="banner-label">Total Commits</span>
                     </div>
                 </div>
             </div>
@@ -575,6 +579,9 @@
         </div>
     </footer>
 
+    <!-- Load local config first (gitignored - contains GitHub token) -->
+    <script src="confidential/config.local.js"></script>
+    <!-- Main script -->
     <script src="script.js"></script>
 </body>
 </html>

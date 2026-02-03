@@ -88,6 +88,491 @@ document.querySelectorAll('section, .project-card, .expertise-card, .achievement
     observer.observe(el);
 });
 
+// GitHub API Integration
+const GITHUB_USERNAME = 'Maneesh-Relanto';
+const GITHUB_API_BASE = 'https://api.github.com';
+
+// GitHub token will be loaded from config.local.js (gitignored)
+// This file is NOT committed to git for security
+let GITHUB_TOKEN = '';
+
+// Try to load token from external config (if it exists)
+if (typeof window.GITHUB_CONFIG !== 'undefined' && window.GITHUB_CONFIG.token) {
+    GITHUB_TOKEN = window.GITHUB_CONFIG.token;
+    console.log('✅ GitHub token loaded successfully');
+} else {
+    console.warn('⚠️ No GitHub token found - clone/view statistics will not be available');
+    console.log('To enable statistics, add your token to confidential/config.local.js');
+}
+
+// Repository mapping - extract repo names from project cards
+const repoMapping = {
+    'Gemini3Flash-Powered-AI-Driven-HRMS': 'Gemini3Flash-Powered-AI-Driven-HRMS',
+    'Gemini3Flash-Powered-Prediction-Engine-for-Employee-Lifecycle': 'Gemini3Flash-Powered-Prediction-Engine-for-Employee-Lifecycle',
+    'Gemini3Flash-Powered-Resume-Builder': 'Gemini3Flash-Powered-Resume-Builder',
+    'JSON-Assertion-Library': 'JSON-Assertion-Library',
+    'RBAC-algorithm': 'RBAC-algorithm',
+    'Rate-Limiter-algorithm': 'Rate-Limiter-algorithm',
+    'Progressbar-Slider-Utilities': 'Progressbar-Slider-Utilities',
+    'Intelligent-Resume-Builder': 'Intelligent-Resume-Builder'
+};
+
+// Global stats tracker
+let globalStats = {
+    totalClones: 0,
+    totalUniqueClones: 0,
+    totalViews: 0,
+    totalUniqueViews: 0,
+    totalPRs: 0,
+    totalCommits: 0,
+    reposWithData: 0
+};
+
+// Helper to create headers with optional authentication
+function getHeaders() {
+    const headers = {
+        'Accept': 'application/vnd.github.v3+json'
+    };
+    if (GITHUB_TOKEN) {
+        headers['Authorization'] = `token ${GITHUB_TOKEN}`;
+    }
+    return headers;
+}
+
+// Fetch clone statistics (requires authentication)
+async function fetchCloneStats(repoName) {
+    try {
+        console.log(`📦 Fetching clone stats for ${repoName}...`);
+        const response = await fetch(
+            `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/traffic/clones`,
+            { headers: getHeaders() }
+        );
+        
+        if (!response.ok) {
+            console.warn(`⚠️ Clone stats not available for ${repoName} (Status: ${response.status})`);
+            if (response.status === 403) {
+                const resetTime = response.headers.get('X-RateLimit-Reset');
+                console.error('❌ Rate limit exceeded or insufficient permissions');
+            }
+            return null;
+        }
+        
+        const data = await response.json();
+        console.log(`✅ Clone stats for ${repoName}:`, data.count);
+        return {
+            count: data.count || 0,
+            uniques: data.uniques || 0
+        };
+    } catch (error) {
+        console.error(`❌ Error fetching clone stats for ${repoName}:`, error);
+        return null;
+    }
+}
+
+// Fetch view statistics (requires authentication)
+async function fetchViewStats(repoName) {
+    try {
+        console.log(`👁️ Fetching view stats for ${repoName}...`);
+        const response = await fetch(
+            `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/traffic/views`,
+            { headers: getHeaders() }
+        );
+        
+        if (!response.ok) {
+            console.warn(`⚠️ View stats not available for ${repoName} (Status: ${response.status})`);
+            return null;
+        }
+        
+        const data = await response.json();
+        console.log(`✅ View stats for ${repoName}:`, data.count);
+        return {
+            count: data.count || 0,
+            uniques: data.uniques || 0
+        };
+    } catch (error) {
+        console.error(`❌ Error fetching view stats for ${repoName}:`, error);
+        return null;
+    }
+}
+
+// Fetch pull request count
+async function fetchPRCount(repoName) {
+    try {
+        const response = await fetch(
+            `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/pulls?state=all&per_page=1`,
+            { headers: getHeaders() }
+        );
+        
+        if (!response.ok) return 0;
+        
+        // Get total count from Link header
+        const linkHeader = response.headers.get('Link');
+        if (linkHeader) {
+            const match = linkHeader.match(/page=(\d+)>; rel="last"/);
+            if (match) {
+                return parseInt(match[1], 10);
+            }
+        }
+        
+        // If no pagination, count the results
+        const data = await response.json();
+        return data.length;
+    } catch (error) {
+        return 0;
+    }
+}
+
+// Fetch total commit count
+async function fetchCommitCount(repoName) {
+    try {
+        // Use contributors endpoint which gives commit counts
+        const response = await fetch(
+            `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/contributors?per_page=100`,
+            { headers: getHeaders() }
+        );
+        
+        if (!response.ok) return 0;
+        
+        const contributors = await response.json();
+        // Sum up all contributions
+        return contributors.reduce((sum, contributor) => sum + contributor.contributions, 0);
+    } catch (error) {
+        return 0;
+    }
+}
+
+// Fetch repository insights
+async function fetchRepoInsights(repoName) {
+    try {
+        const headers = getHeaders();
+        
+        const [repoData, languagesData, commitsData, cloneStats, viewStats, prCount, commitCount] = await Promise.all([
+            fetch(`${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}`, { headers }).then(r => r.json()),
+            fetch(`${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/languages`, { headers }).then(r => r.json()),
+            fetch(`${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/commits?per_page=1`, { headers }).then(r => r.json()),
+            fetchCloneStats(repoName),
+            fetchViewStats(repoName),
+            fetchPRCount(repoName),
+            fetchCommitCount(repoName)
+        ]);
+
+        // Update global stats
+        if (cloneStats) {
+            globalStats.totalClones += cloneStats.count;
+            globalStats.totalUniqueClones += cloneStats.uniques;
+            globalStats.reposWithData++;
+        }
+        if (viewStats) {
+            globalStats.totalViews += viewStats.count;
+            globalStats.totalUniqueViews += viewStats.uniques;
+        }
+        globalStats.totalPRs += prCount;
+        globalStats.totalCommits += commitCount;
+        
+        console.log(`📊 Stats for ${repoName}: ${prCount} PRs, ${commitCount} commits`);
+
+        return {
+            stars: repoData.stargazers_count || 0,
+            forks: repoData.forks_count || 0,
+            watchers: repoData.watchers_count || 0,
+            openIssues: repoData.open_issues_count || 0,
+            languages: languagesData,
+            lastCommit: commitsData[0]?.commit?.author?.date || null,
+            description: repoData.description || '',
+            topics: repoData.topics || [],
+            size: repoData.size || 0,
+            clones: cloneStats,
+            views: viewStats,
+            prCount: prCount,
+            commitCount: commitCount
+        };
+    } catch (error) {
+        console.error(`Error fetching insights for ${repoName}:`, error);
+        return null;
+    }
+}
+
+// Update project card with insights
+function updateProjectCard(card, insights) {
+    if (!insights) return;
+
+    // Remove loading indicator
+    const loader = card.querySelector('.insights-loader');
+    if (loader) {
+        loader.remove();
+    }
+
+    // Create insights container if it doesn't exist
+    let insightsContainer = card.querySelector('.project-insights');
+    if (!insightsContainer) {
+        insightsContainer = document.createElement('div');
+        insightsContainer.className = 'project-insights';
+        
+        // Insert before footer
+        const footer = card.querySelector('.project-footer');
+        if (footer) {
+            card.insertBefore(insightsContainer, footer);
+        }
+    }
+
+    // Build insights HTML - Only show Clones and Views
+    const hasData = insights.clones || insights.views;
+    
+    const insightsHTML = `
+        <div class="insight-stats">
+            ${insights.clones && insights.clones.count > 0 ? `
+            <div class="insight-stat" title="Total Clones (Last 14 days)">
+                <span class="insight-icon">📦</span>
+                <span class="insight-value">${insights.clones.count}</span>
+            </div>
+            ` : ''}
+            ${insights.views && insights.views.count > 0 ? `
+            <div class="insight-stat" title="Total Views (Last 14 days)">
+                <span class="insight-icon">👁️</span>
+                <span class="insight-value">${insights.views.count}</span>
+            </div>
+            ` : ''}
+            ${!hasData ? `
+            <div class="insight-stat" style="opacity: 0.6;" title="Statistics require GitHub token">
+                <span class="insight-icon">ℹ️</span>
+                <span class="insight-value" style="font-size: 0.85rem;">Stats unavailable</span>
+            </div>
+            ` : ''}
+        </div>
+        ${Object.keys(insights.languages).length > 0 ? `
+        <div class="language-breakdown">
+            ${formatLanguages(insights.languages)}
+        </div>
+        ` : ''}
+    `;
+
+    insightsContainer.innerHTML = insightsHTML;
+}
+
+// Format date to relative time
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffTime = Math.abs(now - date);
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 0) return 'Today';
+    if (diffDays === 1) return 'Yesterday';
+    if (diffDays < 7) return `${diffDays}d ago`;
+    if (diffDays < 30) return `${Math.floor(diffDays / 7)}w ago`;
+    if (diffDays < 365) return `${Math.floor(diffDays / 30)}mo ago`;
+    return `${Math.floor(diffDays / 365)}y ago`;
+}
+
+// Format languages with percentages
+function formatLanguages(languages) {
+    const total = Object.values(languages).reduce((sum, val) => sum + val, 0);
+    const sortedLangs = Object.entries(languages)
+        .sort(([, a], [, b]) => b - a)
+        .slice(0, 3); // Top 3 languages
+    
+    return sortedLangs.map(([lang, bytes]) => {
+        const percentage = ((bytes / total) * 100).toFixed(1);
+        return `<span class="lang-badge">${lang} ${percentage}%</span>`;
+    }).join('');
+}
+
+// Extract repo name from GitHub URL
+function extractRepoName(url) {
+    if (!url) return null;
+    const match = url.match(/github\.com\/[^/]+\/([^/]+)/);
+    return match ? match[1] : null;
+}
+
+// Load historical traffic data
+async function loadHistoricalData() {
+    try {
+        const response = await fetch('data/traffic-history.json');
+        if (response.ok) {
+            const data = await response.json();
+            console.log('📊 Loaded historical data:', data);
+            return data;
+        }
+    } catch (error) {
+        console.log('ℹ️ No historical data available yet');
+    }
+    return null;
+}
+
+// Update global stats banner
+async function updateGlobalStats() {
+    console.log('📊 Updating global stats:', globalStats);
+    
+    // Try to load historical data
+    const historicalData = await loadHistoricalData();
+    
+    // Update hero banner with total PRs
+    const prsBanner = document.getElementById('total-prs-banner');
+    if (prsBanner) {
+        const valueSpan = prsBanner.querySelector('.banner-value');
+        if (globalStats.totalPRs > 0) {
+            valueSpan.textContent = globalStats.totalPRs.toLocaleString();
+            prsBanner.style.opacity = '1';
+        } else {
+            valueSpan.textContent = '0';
+        }
+    }
+    
+    // Update hero banner with total commits
+    const commitsBanner = document.getElementById('total-commits-banner');
+    if (commitsBanner) {
+        const valueSpan = commitsBanner.querySelector('.banner-value');
+        if (globalStats.totalCommits > 0) {
+            valueSpan.textContent = globalStats.totalCommits.toLocaleString();
+            commitsBanner.style.opacity = '1';
+        } else {
+            valueSpan.textContent = '0';
+        }
+    }
+    
+    // Create or update stats summary section
+    let statsSummary = document.querySelector('.github-stats-summary');
+    if (!statsSummary && (globalStats.totalClones > 0 || globalStats.totalViews > 0 || historicalData)) {
+        statsSummary = document.createElement('div');
+        statsSummary.className = 'github-stats-summary';
+        
+        const projectsSection = document.querySelector('#projects .container');
+        if (projectsSection) {
+            const header = projectsSection.querySelector('.section-header');
+            if (header) {
+                header.insertAdjacentElement('afterend', statsSummary);
+            }
+        }
+    }
+    
+    // Determine which data to show
+    const useHistorical = historicalData && historicalData.totalClones > 0;
+    const showLast14Days = globalStats.totalClones > 0 || globalStats.totalViews > 0;
+    
+    if (statsSummary && (useHistorical || showLast14Days)) {
+        const clonesDisplay = useHistorical ? historicalData.totalClones : globalStats.totalClones;
+        const viewsDisplay = useHistorical ? historicalData.totalViews : globalStats.totalViews;
+        const timeLabel = useHistorical ? 'All-Time' : 'Last 14 Days';
+        const lastUpdated = useHistorical ? new Date(historicalData.lastUpdated).toLocaleDateString() : '';
+        
+        statsSummary.innerHTML = `
+            <div class="stats-summary-content">
+                <div class="stats-summary-title">
+                    <span class="stats-icon">📊</span>
+                    <span>Aggregate Repository Statistics ${useHistorical ? '(All-Time)' : '(Last 14 Days)'}</span>
+                </div>
+                <div class="stats-summary-grid">
+                    ${(useHistorical || globalStats.totalClones > 0) ? `
+                    <div class="summary-stat">
+                        <span class="summary-icon">📦</span>
+                        <div class="summary-content">
+                            <span class="summary-value">${clonesDisplay.toLocaleString()}</span>
+                            <span class="summary-label">Total Clones${useHistorical ? ' (All-Time)' : ''}</span>
+                        </div>
+                    </div>
+                    ${!useHistorical && globalStats.totalUniqueClones > 0 ? `
+                    <div class="summary-stat">
+                        <span class="summary-icon">👥</span>
+                        <div class="summary-content">
+                            <span class="summary-value">${globalStats.totalUniqueClones.toLocaleString()}</span>
+                            <span class="summary-label">Unique Cloners</span>
+                        </div>
+                    </div>
+                    ` : ''}
+                    ` : ''}
+                    ${(useHistorical || globalStats.totalViews > 0) ? `
+                    <div class="summary-stat">
+                        <span class="summary-icon">👁️</span>
+                        <div class="summary-content">
+                            <span class="summary-value">${viewsDisplay.toLocaleString()}</span>
+                            <span class="summary-label">Total Views${useHistorical ? ' (All-Time)' : ''}</span>
+                        </div>
+                    </div>
+                    ${!useHistorical && globalStats.totalUniqueViews > 0 ? `
+                    <div class="summary-stat">
+                        <span class="summary-icon">🔍</span>
+                        <div class="summary-content">
+                            <span class="summary-value">${globalStats.totalUniqueViews.toLocaleString()}</span>
+                            <span class="summary-label">Unique Visitors</span>
+                        </div>
+                    </div>
+                    ` : ''}
+                    ` : ''}
+                </div>
+                ${useHistorical && lastUpdated ? `
+                <div class="stats-notice" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2);">
+                    <span class="notice-icon">✅</span>
+                    <span>Historical tracking active • Last updated: ${lastUpdated}</span>
+                </div>
+                ` : ''}
+                ${!GITHUB_TOKEN && !useHistorical ? `
+                <div class="stats-notice">
+                    <span class="notice-icon">ℹ️</span>
+                    <span>Add a GitHub token to enable clone/view statistics</span>
+                </div>
+                ` : ''}
+            </div>
+        `;
+    }
+}
+
+// Initialize GitHub insights for all project cards
+async function initializeGitHubInsights() {
+    const projectCards = document.querySelectorAll('.project-card:not(.enterprise-repo)');
+    console.log(`🔍 Found ${projectCards.length} public project cards to fetch insights for`);
+    
+    let processedCount = 0;
+    for (const card of projectCards) {
+        const projectLink = card.querySelector('.project-link[href*="github.com"]');
+        if (projectLink) {
+            const repoName = extractRepoName(projectLink.href);
+            if (repoName) {
+                const insights = await fetchRepoInsights(repoName);
+                updateProjectCard(card, insights);
+                processedCount++;
+            } else {
+                // Remove loader even if no repo name found
+                const loader = card.querySelector('.insights-loader');
+                if (loader) loader.remove();
+            }
+        } else {
+            // Remove loader for cards without GitHub links
+            const loader = card.querySelector('.insights-loader');
+            if (loader) loader.remove();
+        }
+    }
+    
+    console.log(`✅ Processed ${processedCount} repositories`);
+    
+    // Update global stats after all repos are processed
+    updateGlobalStats();
+}
+
+// Add loading indicator for insights
+function showInsightsLoading() {
+    const projectCards = document.querySelectorAll('.project-card:not(.enterprise-repo)');
+    projectCards.forEach(card => {
+        const footer = card.querySelector('.project-footer');
+        if (footer && card.querySelector('.project-link[href*="github.com"]')) {
+            const loader = document.createElement('div');
+            loader.className = 'insights-loader';
+            loader.innerHTML = '<span class="loader-dot"></span><span class="loader-dot"></span><span class="loader-dot"></span>';
+            card.insertBefore(loader, footer);
+        }
+    });
+}
+
+// Initialize insights on page load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        showInsightsLoading();
+        initializeGitHubInsights();
+    });
+} else {
+    showInsightsLoading();
+    initializeGitHubInsights();
+}
+
 // Add active state to navigation based on scroll position
 window.addEventListener('scroll', () => {
     const sections = document.querySelectorAll('section[id]');
