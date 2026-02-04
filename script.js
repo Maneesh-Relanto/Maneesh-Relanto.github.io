@@ -131,6 +131,16 @@ let globalStats = {
 // Store historical data globally for fallback
 let historicalTrafficData = null;
 
+// Timeout wrapper for fetch operations
+function fetchWithTimeout(url, options, timeout = 45000) {
+    return Promise.race([
+        fetch(url, options),
+        new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Request timeout')), timeout)
+        )
+    ]);
+}
+
 // Helper to create headers with optional authentication
 function getHeaders() {
     const headers = {
@@ -146,9 +156,10 @@ function getHeaders() {
 async function fetchCloneStats(repoName) {
     try {
         console.log(`📦 Fetching clone stats for ${repoName}...`);
-        const response = await fetch(
+        const response = await fetchWithTimeout(
             `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/traffic/clones`,
-            { headers: getHeaders() }
+            { headers: getHeaders() },
+            45000
         );
         
         if (!response.ok) {
@@ -183,9 +194,10 @@ async function fetchCloneStats(repoName) {
 async function fetchViewStats(repoName) {
     try {
         console.log(`👁️ Fetching view stats for ${repoName}...`);
-        const response = await fetch(
+        const response = await fetchWithTimeout(
             `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/traffic/views`,
-            { headers: getHeaders() }
+            { headers: getHeaders() },
+            45000
         );
         
         if (!response.ok) {
@@ -350,12 +362,32 @@ async function fetchRepoInsights(repoName) {
 
 // Update project card with insights
 function updateProjectCard(card, insights) {
-    if (!insights) return;
-
     // Remove loading indicator
     const loader = card.querySelector('.insights-loader');
     if (loader) {
         loader.remove();
+    }
+    
+    // If insights is null (timeout or error), show N.A
+    if (!insights) {
+        let insightsContainer = card.querySelector('.project-insights');
+        if (!insightsContainer) {
+            insightsContainer = document.createElement('div');
+            insightsContainer.className = 'project-insights';
+            const footer = card.querySelector('.project-footer');
+            if (footer) {
+                card.insertBefore(insightsContainer, footer);
+            }
+        }
+        insightsContainer.innerHTML = `
+            <div class="insight-stats">
+                <div class="insight-stat" style="opacity: 0.6;" title="Data unavailable (timeout or error)">
+                    <span class="insight-icon">ℹ️</span>
+                    <span class="insight-value" style="font-size: 0.85rem;">N.A</span>
+                </div>
+            </div>
+        `;
+        return;
     }
 
     // Create insights container if it doesn't exist
@@ -599,9 +631,28 @@ async function initializeGitHubInsights() {
         if (projectLink) {
             const repoName = extractRepoName(projectLink.href);
             if (repoName) {
-                const insights = await fetchRepoInsights(repoName);
-                updateProjectCard(card, insights);
-                processedCount++;
+                try {
+                    // Set a timeout for the entire fetch operation
+                    const timeoutPromise = new Promise((resolve) => {
+                        setTimeout(() => {
+                            console.warn(`⏱️ Timeout for ${repoName} - using fallback data`);
+                            resolve(null);
+                        }, 45000);
+                    });
+                    
+                    const insights = await Promise.race([
+                        fetchRepoInsights(repoName),
+                        timeoutPromise
+                    ]);
+                    
+                    updateProjectCard(card, insights);
+                    processedCount++;
+                } catch (error) {
+                    console.error(`Error processing ${repoName}:`, error);
+                    // Remove loader on error
+                    const loader = card.querySelector('.insights-loader');
+                    if (loader) loader.remove();
+                }
             } else {
                 // Remove loader even if no repo name found
                 const loader = card.querySelector('.insights-loader');
