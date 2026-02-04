@@ -205,18 +205,16 @@ async function updateGlobalStats() {
         return;
     }
     
-    // Update hero banner - PRs and Commits show 0 (not tracked in historical data)
+    // Update hero banner with all metrics from historical data
     const prsBanner = document.getElementById('total-prs-banner');
     if (prsBanner) {
-        const valueSpan = prsBanner.querySelector('.banner-value');
-        valueSpan.textContent = '0';
+        prsBanner.textContent = (historicalTrafficData.totalPRs || 0).toLocaleString();
         prsBanner.style.opacity = '1';
     }
     
     const commitsBanner = document.getElementById('total-commits-banner');
     if (commitsBanner) {
-        const valueSpan = commitsBanner.querySelector('.banner-value');
-        valueSpan.textContent = '0';
+        commitsBanner.textContent = (historicalTrafficData.totalCommits || 0).toLocaleString();
         commitsBanner.style.opacity = '1';
     }
     

@@ -57,11 +57,29 @@ function makeRequest(url) {
 async function fetchTrafficData(repo) {
     const clonesUrl = `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repo}/traffic/clones`;
     const viewsUrl = `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repo}/traffic/views`;
+    const prsUrl = `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repo}/pulls?state=all&per_page=1`;
+    const contributorsUrl = `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repo}/contributors?per_page=100`;
 
-    const [clones, views] = await Promise.all([
+    const [clones, views, prsResponse, contributors] = await Promise.all([
         makeRequest(clonesUrl),
-        makeRequest(viewsUrl)
+        makeRequest(viewsUrl),
+        makeRequest(prsUrl),
+        makeRequest(contributorsUrl)
     ]);
+    
+    // Calculate PR count from Link header or array length
+    let prCount = 0;
+    if (prsResponse && Array.isArray(prsResponse)) {
+        prCount = prsResponse.length;
+    }
+    
+    // Calculate total commits from contributors
+    let commitCount = 0;
+    if (contributors && Array.isArray(contributors)) {
+        commitCount = contributors.reduce((sum, contributor) => 
+            sum + (contributor.contributions || 0), 0
+        );
+    }
 
     return {
         repo,
@@ -73,7 +91,9 @@ async function fetchTrafficData(repo) {
         views: views ? {
             count: views.count || 0,
             uniques: views.uniques || 0
-        } : { count: 0, uniques: 0 }
+        } : { count: 0, uniques: 0 },
+        prs: prCount,
+        commits: commitCount
     };
 }
 
@@ -86,6 +106,8 @@ function loadHistoricalData() {
         lastUpdated: null,
         totalClones: 0,
         totalViews: 0,
+        totalPRs: 0,
+        totalCommits: 0,
         repositories: {}
     };
 }
@@ -125,6 +147,8 @@ async function main() {
                 historicalData.repositories[repo] = {
                     totalClones: 0,
                     totalViews: 0,
+                    totalPRs: 0,
+                    totalCommits: 0,
                     history: []
                 };
             }
@@ -139,7 +163,9 @@ async function main() {
                 repoData.history.push({
                     date: today,
                     clones: data.clones.count,
-                    views: data.views.count
+                    views: data.views.count,
+                    prs: data.prs,
+                    commits: data.commits
                 });
                 
                 // Update totals (add the 14-day count on first collection)
@@ -147,6 +173,8 @@ async function main() {
                 if (repoData.history.length === 1) {
                     repoData.totalClones += data.clones.count;
                     repoData.totalViews += data.views.count;
+                    repoData.totalPRs = data.prs;
+                    repoData.totalCommits = data.commits;
                     totalClonesIncrement += data.clones.count;
                     totalViewsIncrement += data.views.count;
                 } else {
@@ -157,11 +185,13 @@ async function main() {
                     
                     repoData.totalClones += clonesDelta;
                     repoData.totalViews += viewsDelta;
+                    repoData.totalPRs = data.prs;
+                    repoData.totalCommits = data.commits;
                     totalClonesIncrement += clonesDelta;
                     totalViewsIncrement += viewsDelta;
                 }
                 
-                console.log(`    ✅ ${data.clones.count} clones, ${data.views.count} views (last 14 days)`);
+                console.log(`    ✅ ${data.clones.count} clones, ${data.views.count} views, ${data.prs} PRs, ${data.commits} commits`);
             } else {
                 console.log(`    ⏭️  Data already collected for today`);
             }
@@ -182,6 +212,16 @@ async function main() {
     // Update global totals
     historicalData.totalClones += totalClonesIncrement;
     historicalData.totalViews += totalViewsIncrement;
+    
+    // Recalculate PRs and commits from all repos
+    historicalData.totalPRs = 0;
+    historicalData.totalCommits = 0;
+    for (const repoName in historicalData.repositories) {
+        const repo = historicalData.repositories[repoName];
+        historicalData.totalPRs += repo.totalPRs || 0;
+        historicalData.totalCommits += repo.totalCommits || 0;
+    }
+    
     historicalData.lastUpdated = new Date().toISOString();
 
     saveHistoricalData(historicalData);
@@ -189,6 +229,8 @@ async function main() {
     console.log('\n📈 Summary:');
     console.log(`  Total Clones (all-time): ${historicalData.totalClones.toLocaleString()}`);
     console.log(`  Total Views (all-time): ${historicalData.totalViews.toLocaleString()}`);
+    console.log(`  Total PRs: ${historicalData.totalPRs.toLocaleString()}`);
+    console.log(`  Total Commits: ${historicalData.totalCommits.toLocaleString()}`);
     console.log(`  Today's increment: +${totalClonesIncrement} clones, +${totalViewsIncrement} views`);
     console.log('\n✅ Traffic statistics updated successfully!');
 }
