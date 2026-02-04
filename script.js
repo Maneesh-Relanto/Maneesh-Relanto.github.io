@@ -128,6 +128,9 @@ let globalStats = {
     reposWithData: 0
 };
 
+// Store historical data globally for fallback
+let historicalTrafficData = null;
+
 // Helper to create headers with optional authentication
 function getHeaders() {
     const headers = {
@@ -270,6 +273,17 @@ async function fetchRepoInsights(repoName) {
             fetchCommitCount(repoName)
         ]);
         
+        // If API calls failed but we have historical data, use it
+        let finalCloneStats = cloneStats;
+        let finalViewStats = viewStats;
+        
+        if (!cloneStats && !viewStats && historicalTrafficData && historicalTrafficData.repositories[repoName]) {
+            const repoHistory = historicalTrafficData.repositories[repoName];
+            finalCloneStats = { count: repoHistory.totalClones || 0, uniques: 0 };
+            finalViewStats = { count: repoHistory.totalViews || 0, uniques: 0 };
+            console.log(`📊 Using historical data for ${repoName}: ${finalCloneStats.count} clones, ${finalViewStats.count} views`);
+        }
+        
         // Validate repoData - check for errors
         if (repoData.message || repoData.documentation_url) {
             console.warn(`⚠️ Error fetching repo data for ${repoName}:`, repoData.message || 'Unknown error');
@@ -282,14 +296,14 @@ async function fetchRepoInsights(repoName) {
             : {};
 
         // Update global stats
-        if (cloneStats) {
-            globalStats.totalClones += cloneStats.count;
-            globalStats.totalUniqueClones += cloneStats.uniques;
+        if (finalCloneStats) {
+            globalStats.totalClones += finalCloneStats.count;
+            globalStats.totalUniqueClones += finalCloneStats.uniques;
             globalStats.reposWithData++;
         }
-        if (viewStats) {
-            globalStats.totalViews += viewStats.count;
-            globalStats.totalUniqueViews += viewStats.uniques;
+        if (finalViewStats) {
+            globalStats.totalViews += finalViewStats.count;
+            globalStats.totalUniqueViews += finalViewStats.uniques;
         }
         globalStats.totalPRs += prCount;
         globalStats.totalCommits += commitCount;
@@ -306,8 +320,8 @@ async function fetchRepoInsights(repoName) {
             description: repoData.description || '',
             topics: repoData.topics || [],
             size: repoData.size || 0,
-            clones: cloneStats,
-            views: viewStats,
+            clones: finalCloneStats,
+            views: finalViewStats,
             prCount: prCount,
             commitCount: commitCount
         };
@@ -556,6 +570,9 @@ async function updateGlobalStats() {
 
 // Initialize GitHub insights for all project cards
 async function initializeGitHubInsights() {
+    // Load historical data first for fallback
+    historicalTrafficData = await loadHistoricalData();
+    
     const projectCards = document.querySelectorAll('.project-card:not(.enterprise-repo)');
     console.log(`🔍 Found ${projectCards.length} public project cards to fetch insights for`);
     
