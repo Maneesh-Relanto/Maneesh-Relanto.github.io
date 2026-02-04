@@ -88,279 +88,47 @@ document.querySelectorAll('section, .project-card, .expertise-card, .achievement
     observer.observe(el);
 });
 
-// GitHub API Integration
+// GitHub Stats Integration - Using Historical Data Only
 const GITHUB_USERNAME = 'Maneesh-Relanto';
-const GITHUB_API_BASE = 'https://api.github.com';
 
-// GitHub token will be loaded from config.local.js (gitignored)
-// This file is NOT committed to git for security
-let GITHUB_TOKEN = '';
+// All stats are read from traffic-history.json (updated daily by GitHub Actions)
+console.log('📊 Loading stats from historical data file...');
 
-// Try to load token from external config (if it exists)
-if (typeof window.GITHUB_CONFIG !== 'undefined' && window.GITHUB_CONFIG.token) {
-    GITHUB_TOKEN = window.GITHUB_CONFIG.token;
-    console.log('✅ GitHub token loaded successfully');
-} else {
-    console.warn('⚠️ No GitHub token found - clone/view statistics will not be available');
-    console.log('To enable statistics, add your token to confidential/config.local.js');
+// Load historical traffic data
+async function loadHistoricalData() {
+    try {
+        const response = await fetch('data/traffic-history.json');
+        if (response.ok) {
+            const data = await response.json();
+            console.log('✅ Loaded historical data:', data);
+            return data;
+        }
+    } catch (error) {
+        console.error('❌ Failed to load historical data:', error);
+    }
+    return null;
 }
 
-// Repository mapping - extract repo names from project cards
-const repoMapping = {
-    'Gemini3Flash-Powered-AI-Driven-HRMS': 'Gemini3Flash-Powered-AI-Driven-HRMS',
-    'Gemini3Flash-Powered-Prediction-Engine-for-Employee-Lifecycle': 'Gemini3Flash-Powered-Prediction-Engine-for-Employee-Lifecycle',
-    'Gemini3Flash-Powered-Resume-Builder': 'Gemini3Flash-Powered-Resume-Builder',
-    'JSON-Assertion-Library': 'JSON-Assertion-Library',
-    'RBAC-algorithm': 'RBAC-algorithm',
-    'Rate-Limiter-algorithm': 'Rate-Limiter-algorithm',
-    'Progressbar-Slider-Utilities': 'Progressbar-Slider-Utilities',
-    'Intelligent-Resume-Builder': 'Intelligent-Resume-Builder'
-};
-
-// Global stats tracker
-let globalStats = {
-    totalClones: 0,
-    totalUniqueClones: 0,
-    totalViews: 0,
-    totalUniqueViews: 0,
-    totalPRs: 0,
-    totalCommits: 0,
-    reposWithData: 0
-};
-
-// Store historical data globally for fallback
+// Store historical data globally
 let historicalTrafficData = null;
 
-// Timeout wrapper for fetch operations
-function fetchWithTimeout(url, options, timeout = 45000) {
-    return Promise.race([
-        fetch(url, options),
-        new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('Request timeout')), timeout)
-        )
-    ]);
-}
-
-// Helper to create headers with optional authentication
-function getHeaders() {
-    const headers = {
-        'Accept': 'application/vnd.github.v3+json'
+// Get repository insights from historical data
+function getRepoInsights(repoName) {
+    if (!historicalTrafficData || !historicalTrafficData.repositories[repoName]) {
+        console.warn(`⚠️ No historical data found for ${repoName}`);
+        return null;
+    }
+    
+    const repoData = historicalTrafficData.repositories[repoName];
+    console.log(`📊 Loaded stats for ${repoName}: ${repoData.totalClones} clones, ${repoData.totalViews} views`);
+    
+    return {
+        clones: repoData.totalClones > 0 ? { count: repoData.totalClones, uniques: 0 } : null,
+        views: repoData.totalViews > 0 ? { count: repoData.totalViews, uniques: 0 } : null
     };
-    if (GITHUB_TOKEN) {
-        headers['Authorization'] = `token ${GITHUB_TOKEN}`;
-    }
-    return headers;
 }
 
-// Fetch clone statistics (requires authentication)
-async function fetchCloneStats(repoName) {
-    try {
-        console.log(`📦 Fetching clone stats for ${repoName}...`);
-        const response = await fetchWithTimeout(
-            `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/traffic/clones`,
-            { headers: getHeaders() },
-            45000
-        );
-        
-        if (!response.ok) {
-            console.warn(`⚠️ Clone stats not available for ${repoName} (Status: ${response.status})`);
-            if (response.status === 403) {
-                const resetTime = response.headers.get('X-RateLimit-Reset');
-                console.error('❌ Rate limit exceeded or insufficient permissions');
-            }
-            return null;
-        }
-        
-        const data = await response.json();
-        
-        // Validate response - check for error responses
-        if (data.message || data.documentation_url || !data.hasOwnProperty('count')) {
-            console.warn(`⚠️ Invalid clone stats response for ${repoName}:`, data.message || 'Unknown error');
-            return null;
-        }
-        
-        console.log(`✅ Clone stats for ${repoName}:`, data.count);
-        return {
-            count: data.count || 0,
-            uniques: data.uniques || 0
-        };
-    } catch (error) {
-        console.error(`❌ Error fetching clone stats for ${repoName}:`, error);
-        return null;
-    }
-}
-
-// Fetch view statistics (requires authentication)
-async function fetchViewStats(repoName) {
-    try {
-        console.log(`👁️ Fetching view stats for ${repoName}...`);
-        const response = await fetchWithTimeout(
-            `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/traffic/views`,
-            { headers: getHeaders() },
-            45000
-        );
-        
-        if (!response.ok) {
-            console.warn(`⚠️ View stats not available for ${repoName} (Status: ${response.status})`);
-            return null;
-        }
-        
-        const data = await response.json();
-        
-        // Validate response - check for error responses
-        if (data.message || data.documentation_url || !data.hasOwnProperty('count')) {
-            console.warn(`⚠️ Invalid view stats response for ${repoName}:`, data.message || 'Unknown error');
-            return null;
-        }
-        
-        console.log(`✅ View stats for ${repoName}:`, data.count);
-        return {
-            count: data.count || 0,
-            uniques: data.uniques || 0
-        };
-    } catch (error) {
-        console.error(`❌ Error fetching view stats for ${repoName}:`, error);
-        return null;
-    }
-}
-
-// Fetch pull request count
-async function fetchPRCount(repoName) {
-    try {
-        const response = await fetch(
-            `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/pulls?state=all&per_page=1`,
-            { headers: getHeaders() }
-        );
-        
-        if (!response.ok) return 0;
-        
-        // Get total count from Link header
-        const linkHeader = response.headers.get('Link');
-        if (linkHeader) {
-            const match = linkHeader.match(/page=(\d+)>; rel="last"/);
-            if (match) {
-                return parseInt(match[1], 10);
-            }
-        }
-        
-        // If no pagination, count the results
-        const data = await response.json();
-        return data.length;
-    } catch (error) {
-        return 0;
-    }
-}
-
-// Fetch total commit count
-async function fetchCommitCount(repoName) {
-    try {
-        // Use contributors endpoint which gives commit counts
-        const response = await fetch(
-            `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/contributors?per_page=100`,
-            { headers: getHeaders() }
-        );
-        
-        if (!response.ok) return 0;
-        
-        const contributors = await response.json();
-        // Sum up all contributions
-        return contributors.reduce((sum, contributor) => sum + contributor.contributions, 0);
-    } catch (error) {
-        return 0;
-    }
-}
-
-// Fetch repository insights
-async function fetchRepoInsights(repoName) {
-    try {
-        const headers = getHeaders();
-        
-        // Try to fetch from API first
-        const [repoData, languagesData, commitsData, cloneStats, viewStats, prCount, commitCount] = await Promise.all([
-            fetch(`${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}`, { headers }).then(r => r.json()).catch(() => ({})),
-            fetch(`${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/languages`, { headers }).then(r => r.json()).catch(() => ({})),
-            fetch(`${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/commits?per_page=1`, { headers }).then(r => r.json()).catch(() => []),
-            fetchCloneStats(repoName),
-            fetchViewStats(repoName),
-            fetchPRCount(repoName),
-            fetchCommitCount(repoName)
-        ]);
-        
-        // Fallback logic: API → Historical Data → 0
-        let finalCloneStats = cloneStats;
-        let finalViewStats = viewStats;
-        
-        // If API failed, try historical data
-        if ((!cloneStats || !viewStats) && historicalTrafficData && historicalTrafficData.repositories[repoName]) {
-            const repoHistory = historicalTrafficData.repositories[repoName];
-            if (!cloneStats && repoHistory.totalClones) {
-                finalCloneStats = { count: repoHistory.totalClones || 0, uniques: 0 };
-                console.log(`📊 Fallback: Using historical clone data for ${repoName}: ${finalCloneStats.count}`);
-            }
-            if (!viewStats && repoHistory.totalViews) {
-                finalViewStats = { count: repoHistory.totalViews || 0, uniques: 0 };
-                console.log(`📊 Fallback: Using historical view data for ${repoName}: ${finalViewStats.count}`);
-            }
-        }
-        
-        // Last resort: if still no data, set to null (will show 0 or N.A in UI)
-        if (!finalCloneStats) {
-            finalCloneStats = null;
-            console.log(`⚠️ No clone data available for ${repoName} (API failed, no historical data)`);
-        }
-        if (!finalViewStats) {
-            finalViewStats = null;
-            console.log(`⚠️ No view data available for ${repoName} (API failed, no historical data)`);
-        }
-        
-        // Validate repoData - check for errors
-        if (repoData.message || repoData.documentation_url) {
-            console.warn(`⚠️ Error fetching repo data for ${repoName}:`, repoData.message || 'Unknown error');
-            return null;
-        }
-        
-        // Validate languagesData - remove error fields if present
-        const validLanguages = (languagesData && !languagesData.message && !languagesData.documentation_url) 
-            ? languagesData 
-            : {};
-
-        // Update global stats
-        if (finalCloneStats) {
-            globalStats.totalClones += finalCloneStats.count;
-            globalStats.totalUniqueClones += finalCloneStats.uniques;
-            globalStats.reposWithData++;
-        }
-        if (finalViewStats) {
-            globalStats.totalViews += finalViewStats.count;
-            globalStats.totalUniqueViews += finalViewStats.uniques;
-        }
-        globalStats.totalPRs += prCount;
-        globalStats.totalCommits += commitCount;
-        
-        console.log(`📊 Stats for ${repoName}: ${prCount} PRs, ${commitCount} commits`);
-
-        return {
-            stars: repoData.stargazers_count || 0,
-            forks: repoData.forks_count || 0,
-            watchers: repoData.watchers_count || 0,
-            openIssues: repoData.open_issues_count || 0,
-            languages: validLanguages,
-            lastCommit: commitsData[0]?.commit?.author?.date || null,
-            description: repoData.description || '',
-            topics: repoData.topics || [],
-            size: repoData.size || 0,
-            clones: finalCloneStats,
-            views: finalViewStats,
-            prCount: prCount,
-            commitCount: commitCount
-        };
-    } catch (error) {
-        console.error(`Error fetching insights for ${repoName}:`, error);
-        return null;
-    }
-}
-
-// Update project card with insights
+// Update project card with insights from historical data
 function updateProjectCard(card, insights) {
     // Remove loading indicator
     const loader = card.querySelector('.insights-loader');
@@ -368,20 +136,22 @@ function updateProjectCard(card, insights) {
         loader.remove();
     }
     
-    // If insights is null (timeout or error), show N.A
-    if (!insights) {
-        let insightsContainer = card.querySelector('.project-insights');
-        if (!insightsContainer) {
-            insightsContainer = document.createElement('div');
-            insightsContainer.className = 'project-insights';
-            const footer = card.querySelector('.project-footer');
-            if (footer) {
-                card.insertBefore(insightsContainer, footer);
-            }
+    // Create insights container
+    let insightsContainer = card.querySelector('.project-insights');
+    if (!insightsContainer) {
+        insightsContainer = document.createElement('div');
+        insightsContainer.className = 'project-insights';
+        const footer = card.querySelector('.project-footer');
+        if (footer) {
+            card.insertBefore(insightsContainer, footer);
         }
+    }
+    
+    // If no insights, show N.A
+    if (!insights) {
         insightsContainer.innerHTML = `
             <div class="insight-stats">
-                <div class="insight-stat" style="opacity: 0.6;" title="Data unavailable (timeout or error)">
+                <div class="insight-stat" style="opacity: 0.6;" title="No data available">
                     <span class="insight-icon">ℹ️</span>
                     <span class="insight-value" style="font-size: 0.85rem;">N.A</span>
                 </div>
@@ -389,99 +159,34 @@ function updateProjectCard(card, insights) {
         `;
         return;
     }
-
-    // Create insights container if it doesn't exist
-    let insightsContainer = card.querySelector('.project-insights');
-    if (!insightsContainer) {
-        insightsContainer = document.createElement('div');
-        insightsContainer.className = 'project-insights';
-        
-        // Insert before footer
-        const footer = card.querySelector('.project-footer');
-        if (footer) {
-            card.insertBefore(insightsContainer, footer);
-        }
-    }
-
-    // Build insights HTML - Only show Clones and Views
+    
+    // Build insights HTML from historical data
     const hasData = insights.clones || insights.views;
     
     const insightsHTML = `
         <div class="insight-stats">
             ${insights.clones && insights.clones.count > 0 ? `
-            <div class="insight-stat" title="Total Clones (All-Time from Historical Data)">
+            <div class="insight-stat" title="Total Clones (All-Time)">
                 <span class="insight-icon">📦</span>
-                <span class="insight-value">${insights.clones.count || 0}</span>
+                <span class="insight-value">${insights.clones.count.toLocaleString()}</span>
             </div>
             ` : ''}
             ${insights.views && insights.views.count > 0 ? `
-            <div class="insight-stat" title="Total Views (All-Time from Historical Data)">
+            <div class="insight-stat" title="Total Views (All-Time)">
                 <span class="insight-icon">👁️</span>
-                <span class="insight-value">${insights.views.count || 0}</span>
+                <span class="insight-value">${insights.views.count.toLocaleString()}</span>
             </div>
             ` : ''}
             ${!hasData ? `
-            <div class="insight-stat" style="opacity: 0.6;" title="No statistics available (API failed, no historical data)">
+            <div class="insight-stat" style="opacity: 0.6;" title="No statistics available">
                 <span class="insight-icon">ℹ️</span>
                 <span class="insight-value" style="font-size: 0.85rem;">N.A</span>
             </div>
             ` : ''}
         </div>
-        ${insights.languages && typeof insights.languages === 'object' && Object.keys(insights.languages).length > 0 ? `
-        <div class="language-breakdown">
-            ${formatLanguages(insights.languages)}
-        </div>
-        ` : ''}
     `;
 
     insightsContainer.innerHTML = insightsHTML;
-}
-
-// Format date to relative time
-function formatDate(dateString) {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffTime = Math.abs(now - date);
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    
-    if (diffDays === 0) return 'Today';
-    if (diffDays === 1) return 'Yesterday';
-    if (diffDays < 7) return `${diffDays}d ago`;
-    if (diffDays < 30) return `${Math.floor(diffDays / 7)}w ago`;
-    if (diffDays < 365) return `${Math.floor(diffDays / 30)}mo ago`;
-    return `${Math.floor(diffDays / 365)}y ago`;
-}
-
-// Format languages with percentages
-function formatLanguages(languages) {
-    // Validate input
-    if (!languages || typeof languages !== 'object' || Object.keys(languages).length === 0) {
-        return '';
-    }
-    
-    // Filter out non-numeric values
-    const validLanguages = Object.entries(languages).filter(([lang, bytes]) => 
-        typeof bytes === 'number' && bytes > 0 && !isNaN(bytes)
-    );
-    
-    if (validLanguages.length === 0) {
-        return '';
-    }
-    
-    const total = validLanguages.reduce((sum, [, bytes]) => sum + bytes, 0);
-    
-    if (total === 0 || isNaN(total)) {
-        return '';
-    }
-    
-    const sortedLangs = validLanguages
-        .sort(([, a], [, b]) => b - a)
-        .slice(0, 3); // Top 3 languages
-    
-    return sortedLangs.map(([lang, bytes]) => {
-        const percentage = ((bytes / total) * 100).toFixed(1);
-        return `<span class="lang-badge">${lang} ${percentage}%</span>`;
-    }).join('');
 }
 
 // Extract repo name from GitHub URL
@@ -491,49 +196,33 @@ function extractRepoName(url) {
     return match ? match[1] : null;
 }
 
-// Load historical traffic data
-async function loadHistoricalData() {
-    try {
-        const response = await fetch('data/traffic-history.json');
-        if (response.ok) {
-            const data = await response.json();
-            console.log('📊 Loaded historical data:', data);
-            return data;
-        }
-    } catch (error) {
-        console.log('ℹ️ No historical data available yet');
-    }
-    return null;
-}
-
-// Update global stats banner
+// Update global stats banner from historical data
 async function updateGlobalStats() {
-    console.log('📊 Updating global stats:', globalStats);
+    console.log('📊 Updating global stats from historical data');
     
-    // Try to load historical data
-    const historicalData = await loadHistoricalData();
+    if (!historicalTrafficData) {
+        console.warn('⚠️ No historical data available');
+        return;
+    }
     
-    // Update hero banner with total PRs
+    // Update hero banner - PRs and Commits show 0 (not tracked in historical data)
     const prsBanner = document.getElementById('total-prs-banner');
     if (prsBanner) {
         const valueSpan = prsBanner.querySelector('.banner-value');
-        const prCount = globalStats.totalPRs || 0;
-        valueSpan.textContent = prCount.toLocaleString();
+        valueSpan.textContent = '0';
         prsBanner.style.opacity = '1';
     }
     
-    // Update hero banner with total commits
     const commitsBanner = document.getElementById('total-commits-banner');
     if (commitsBanner) {
         const valueSpan = commitsBanner.querySelector('.banner-value');
-        const commitCount = globalStats.totalCommits || 0;
-        valueSpan.textContent = commitCount.toLocaleString();
+        valueSpan.textContent = '0';
         commitsBanner.style.opacity = '1';
     }
     
     // Create or update stats summary section
     let statsSummary = document.querySelector('.github-stats-summary');
-    if (!statsSummary && (globalStats.totalClones > 0 || globalStats.totalViews > 0 || historicalData)) {
+    if (!statsSummary && historicalTrafficData && historicalTrafficData.totalClones > 0) {
         statsSummary = document.createElement('div');
         statsSummary.className = 'github-stats-summary';
         
@@ -546,84 +235,55 @@ async function updateGlobalStats() {
         }
     }
     
-    // Determine which data to show
-    const useHistorical = historicalData && historicalData.totalClones > 0;
-    const showLast14Days = globalStats.totalClones > 0 || globalStats.totalViews > 0;
-    
-    if (statsSummary && (useHistorical || showLast14Days)) {
-        const clonesDisplay = useHistorical ? (historicalData.totalClones || 0) : (globalStats.totalClones || 0);
-        const viewsDisplay = useHistorical ? (historicalData.totalViews || 0) : (globalStats.totalViews || 0);
-        const timeLabel = useHistorical ? 'All-Time' : 'Last 14 Days';
-        const lastUpdated = useHistorical ? new Date(historicalData.lastUpdated).toLocaleDateString() : '';
+    // Display aggregate stats from historical data
+    if (statsSummary && historicalTrafficData) {
+        const clonesDisplay = historicalTrafficData.totalClones || 0;
+        const viewsDisplay = historicalTrafficData.totalViews || 0;
+        const lastUpdated = new Date(historicalTrafficData.lastUpdated).toLocaleDateString();
         
         statsSummary.innerHTML = `
             <div class="stats-summary-content">
                 <div class="stats-summary-title">
                     <span class="stats-icon">📊</span>
-                    <span>Aggregate Repository Statistics ${useHistorical ? '(All-Time)' : '(Last 14 Days)'}</span>
+                    <span>Aggregate Repository Statistics (All-Time)</span>
                 </div>
                 <div class="stats-summary-grid">
-                    ${(useHistorical || globalStats.totalClones > 0) ? `
                     <div class="summary-stat">
                         <span class="summary-icon">📦</span>
                         <div class="summary-content">
                             <span class="summary-value">${clonesDisplay.toLocaleString()}</span>
-                            <span class="summary-label">Total Clones${useHistorical ? ' (All-Time)' : ''}</span>
+                            <span class="summary-label">Total Clones</span>
                         </div>
                     </div>
-                    ${!useHistorical && globalStats.totalUniqueClones > 0 ? `
-                    <div class="summary-stat">
-                        <span class="summary-icon">👥</span>
-                        <div class="summary-content">
-                            <span class="summary-value">${(globalStats.totalUniqueClones || 0).toLocaleString()}</span>
-                            <span class="summary-label">Unique Cloners</span>
-                        </div>
-                    </div>
-                    ` : ''}
-                    ` : ''}
-                    ${(useHistorical || globalStats.totalViews > 0) ? `
                     <div class="summary-stat">
                         <span class="summary-icon">👁️</span>
                         <div class="summary-content">
                             <span class="summary-value">${viewsDisplay.toLocaleString()}</span>
-                            <span class="summary-label">Total Views${useHistorical ? ' (All-Time)' : ''}</span>
+                            <span class="summary-label">Total Views</span>
                         </div>
                     </div>
-                    ${!useHistorical && globalStats.totalUniqueViews > 0 ? `
-                    <div class="summary-stat">
-                        <span class="summary-icon">🔍</span>
-                        <div class="summary-content">
-                            <span class="summary-value">${(globalStats.totalUniqueViews || 0).toLocaleString()}</span>
-                            <span class="summary-label">Unique Visitors</span>
-                        </div>
-                    </div>
-                    ` : ''}
-                    ` : ''}
                 </div>
-                ${useHistorical && lastUpdated ? `
                 <div class="stats-notice" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2);">
                     <span class="notice-icon">✅</span>
-                    <span>Historical tracking active • Last updated: ${lastUpdated}</span>
+                    <span>Updated daily via GitHub Actions • Last updated: ${lastUpdated}</span>
                 </div>
-                ` : ''}
-                ${!GITHUB_TOKEN && !useHistorical ? `
-                <div class="stats-notice">
-                    <span class="notice-icon">ℹ️</span>
-                    <span>Add a GitHub token to enable clone/view statistics</span>
-                </div>
-                ` : ''}
             </div>
         `;
     }
 }
 
-// Initialize GitHub insights for all project cards
+// Initialize GitHub insights from historical data
 async function initializeGitHubInsights() {
-    // Load historical data first for fallback
+    // Load historical data
     historicalTrafficData = await loadHistoricalData();
     
+    if (!historicalTrafficData) {
+        console.error('❌ Failed to load historical traffic data');
+        return;
+    }
+    
     const projectCards = document.querySelectorAll('.project-card:not(.enterprise-repo)');
-    console.log(`🔍 Found ${projectCards.length} public project cards to fetch insights for`);
+    console.log(`🔍 Found ${projectCards.length} public project cards to populate`);
     
     let processedCount = 0;
     for (const card of projectCards) {
@@ -631,30 +291,11 @@ async function initializeGitHubInsights() {
         if (projectLink) {
             const repoName = extractRepoName(projectLink.href);
             if (repoName) {
-                try {
-                    // Set a timeout for the entire fetch operation
-                    const timeoutPromise = new Promise((resolve) => {
-                        setTimeout(() => {
-                            console.warn(`⏱️ Timeout for ${repoName} - using fallback data`);
-                            resolve(null);
-                        }, 45000);
-                    });
-                    
-                    const insights = await Promise.race([
-                        fetchRepoInsights(repoName),
-                        timeoutPromise
-                    ]);
-                    
-                    updateProjectCard(card, insights);
-                    processedCount++;
-                } catch (error) {
-                    console.error(`Error processing ${repoName}:`, error);
-                    // Remove loader on error
-                    const loader = card.querySelector('.insights-loader');
-                    if (loader) loader.remove();
-                }
+                const insights = getRepoInsights(repoName);
+                updateProjectCard(card, insights);
+                processedCount++;
             } else {
-                // Remove loader even if no repo name found
+                // Remove loader if no repo name found
                 const loader = card.querySelector('.insights-loader');
                 if (loader) loader.remove();
             }
@@ -665,9 +306,9 @@ async function initializeGitHubInsights() {
         }
     }
     
-    console.log(`✅ Processed ${processedCount} repositories`);
+    console.log(`✅ Populated ${processedCount} repositories with historical data`);
     
-    // Update global stats after all repos are processed
+    // Update global stats
     updateGlobalStats();
 }
 
