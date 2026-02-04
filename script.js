@@ -158,6 +158,13 @@ async function fetchCloneStats(repoName) {
         }
         
         const data = await response.json();
+        
+        // Validate response - check for error responses
+        if (data.message || data.documentation_url || !data.hasOwnProperty('count')) {
+            console.warn(`⚠️ Invalid clone stats response for ${repoName}:`, data.message || 'Unknown error');
+            return null;
+        }
+        
         console.log(`✅ Clone stats for ${repoName}:`, data.count);
         return {
             count: data.count || 0,
@@ -184,6 +191,13 @@ async function fetchViewStats(repoName) {
         }
         
         const data = await response.json();
+        
+        // Validate response - check for error responses
+        if (data.message || data.documentation_url || !data.hasOwnProperty('count')) {
+            console.warn(`⚠️ Invalid view stats response for ${repoName}:`, data.message || 'Unknown error');
+            return null;
+        }
+        
         console.log(`✅ View stats for ${repoName}:`, data.count);
         return {
             count: data.count || 0,
@@ -247,14 +261,25 @@ async function fetchRepoInsights(repoName) {
         const headers = getHeaders();
         
         const [repoData, languagesData, commitsData, cloneStats, viewStats, prCount, commitCount] = await Promise.all([
-            fetch(`${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}`, { headers }).then(r => r.json()),
-            fetch(`${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/languages`, { headers }).then(r => r.json()),
-            fetch(`${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/commits?per_page=1`, { headers }).then(r => r.json()),
+            fetch(`${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}`, { headers }).then(r => r.json()).catch(() => ({})),
+            fetch(`${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/languages`, { headers }).then(r => r.json()).catch(() => ({})),
+            fetch(`${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/commits?per_page=1`, { headers }).then(r => r.json()).catch(() => []),
             fetchCloneStats(repoName),
             fetchViewStats(repoName),
             fetchPRCount(repoName),
             fetchCommitCount(repoName)
         ]);
+        
+        // Validate repoData - check for errors
+        if (repoData.message || repoData.documentation_url) {
+            console.warn(`⚠️ Error fetching repo data for ${repoName}:`, repoData.message || 'Unknown error');
+            return null;
+        }
+        
+        // Validate languagesData - remove error fields if present
+        const validLanguages = (languagesData && !languagesData.message && !languagesData.documentation_url) 
+            ? languagesData 
+            : {};
 
         // Update global stats
         if (cloneStats) {
@@ -276,7 +301,7 @@ async function fetchRepoInsights(repoName) {
             forks: repoData.forks_count || 0,
             watchers: repoData.watchers_count || 0,
             openIssues: repoData.open_issues_count || 0,
-            languages: languagesData,
+            languages: validLanguages,
             lastCommit: commitsData[0]?.commit?.author?.date || null,
             description: repoData.description || '',
             topics: repoData.topics || [],
@@ -323,23 +348,23 @@ function updateProjectCard(card, insights) {
             ${insights.clones && insights.clones.count > 0 ? `
             <div class="insight-stat" title="Total Clones (Last 14 days)">
                 <span class="insight-icon">📦</span>
-                <span class="insight-value">${insights.clones.count}</span>
+                <span class="insight-value">${insights.clones.count || 0}</span>
             </div>
             ` : ''}
             ${insights.views && insights.views.count > 0 ? `
             <div class="insight-stat" title="Total Views (Last 14 days)">
                 <span class="insight-icon">👁️</span>
-                <span class="insight-value">${insights.views.count}</span>
+                <span class="insight-value">${insights.views.count || 0}</span>
             </div>
             ` : ''}
             ${!hasData ? `
             <div class="insight-stat" style="opacity: 0.6;" title="Statistics require GitHub token">
                 <span class="insight-icon">ℹ️</span>
-                <span class="insight-value" style="font-size: 0.85rem;">Stats unavailable</span>
+                <span class="insight-value" style="font-size: 0.85rem;">N.A</span>
             </div>
             ` : ''}
         </div>
-        ${Object.keys(insights.languages).length > 0 ? `
+        ${insights.languages && typeof insights.languages === 'object' && Object.keys(insights.languages).length > 0 ? `
         <div class="language-breakdown">
             ${formatLanguages(insights.languages)}
         </div>
@@ -366,8 +391,27 @@ function formatDate(dateString) {
 
 // Format languages with percentages
 function formatLanguages(languages) {
-    const total = Object.values(languages).reduce((sum, val) => sum + val, 0);
-    const sortedLangs = Object.entries(languages)
+    // Validate input
+    if (!languages || typeof languages !== 'object' || Object.keys(languages).length === 0) {
+        return '';
+    }
+    
+    // Filter out non-numeric values
+    const validLanguages = Object.entries(languages).filter(([lang, bytes]) => 
+        typeof bytes === 'number' && bytes > 0 && !isNaN(bytes)
+    );
+    
+    if (validLanguages.length === 0) {
+        return '';
+    }
+    
+    const total = validLanguages.reduce((sum, [, bytes]) => sum + bytes, 0);
+    
+    if (total === 0 || isNaN(total)) {
+        return '';
+    }
+    
+    const sortedLangs = validLanguages
         .sort(([, a], [, b]) => b - a)
         .slice(0, 3); // Top 3 languages
     
@@ -410,24 +454,18 @@ async function updateGlobalStats() {
     const prsBanner = document.getElementById('total-prs-banner');
     if (prsBanner) {
         const valueSpan = prsBanner.querySelector('.banner-value');
-        if (globalStats.totalPRs > 0) {
-            valueSpan.textContent = globalStats.totalPRs.toLocaleString();
-            prsBanner.style.opacity = '1';
-        } else {
-            valueSpan.textContent = '0';
-        }
+        const prCount = globalStats.totalPRs || 0;
+        valueSpan.textContent = prCount.toLocaleString();
+        prsBanner.style.opacity = '1';
     }
     
     // Update hero banner with total commits
     const commitsBanner = document.getElementById('total-commits-banner');
     if (commitsBanner) {
         const valueSpan = commitsBanner.querySelector('.banner-value');
-        if (globalStats.totalCommits > 0) {
-            valueSpan.textContent = globalStats.totalCommits.toLocaleString();
-            commitsBanner.style.opacity = '1';
-        } else {
-            valueSpan.textContent = '0';
-        }
+        const commitCount = globalStats.totalCommits || 0;
+        valueSpan.textContent = commitCount.toLocaleString();
+        commitsBanner.style.opacity = '1';
     }
     
     // Create or update stats summary section
@@ -450,8 +488,8 @@ async function updateGlobalStats() {
     const showLast14Days = globalStats.totalClones > 0 || globalStats.totalViews > 0;
     
     if (statsSummary && (useHistorical || showLast14Days)) {
-        const clonesDisplay = useHistorical ? historicalData.totalClones : globalStats.totalClones;
-        const viewsDisplay = useHistorical ? historicalData.totalViews : globalStats.totalViews;
+        const clonesDisplay = useHistorical ? (historicalData.totalClones || 0) : (globalStats.totalClones || 0);
+        const viewsDisplay = useHistorical ? (historicalData.totalViews || 0) : (globalStats.totalViews || 0);
         const timeLabel = useHistorical ? 'All-Time' : 'Last 14 Days';
         const lastUpdated = useHistorical ? new Date(historicalData.lastUpdated).toLocaleDateString() : '';
         
@@ -474,7 +512,7 @@ async function updateGlobalStats() {
                     <div class="summary-stat">
                         <span class="summary-icon">👥</span>
                         <div class="summary-content">
-                            <span class="summary-value">${globalStats.totalUniqueClones.toLocaleString()}</span>
+                            <span class="summary-value">${(globalStats.totalUniqueClones || 0).toLocaleString()}</span>
                             <span class="summary-label">Unique Cloners</span>
                         </div>
                     </div>
@@ -492,7 +530,7 @@ async function updateGlobalStats() {
                     <div class="summary-stat">
                         <span class="summary-icon">🔍</span>
                         <div class="summary-content">
-                            <span class="summary-value">${globalStats.totalUniqueViews.toLocaleString()}</span>
+                            <span class="summary-value">${(globalStats.totalUniqueViews || 0).toLocaleString()}</span>
                             <span class="summary-label">Unique Visitors</span>
                         </div>
                     </div>
