@@ -9,7 +9,7 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN || process.env.STATS_TOKEN;
 const GITHUB_USERNAME = process.env.GITHUB_USERNAME || 'Maneesh-Relanto';
 const GITHUB_API_BASE = 'https://api.github.com';
 const DATA_FILE = path.join(__dirname, '../data/traffic-history.json');
