@@ -263,6 +263,7 @@ async function fetchRepoInsights(repoName) {
     try {
         const headers = getHeaders();
         
+        // Try to fetch from API first
         const [repoData, languagesData, commitsData, cloneStats, viewStats, prCount, commitCount] = await Promise.all([
             fetch(`${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}`, { headers }).then(r => r.json()).catch(() => ({})),
             fetch(`${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repoName}/languages`, { headers }).then(r => r.json()).catch(() => ({})),
@@ -273,15 +274,31 @@ async function fetchRepoInsights(repoName) {
             fetchCommitCount(repoName)
         ]);
         
-        // If API calls failed but we have historical data, use it
+        // Fallback logic: API → Historical Data → 0
         let finalCloneStats = cloneStats;
         let finalViewStats = viewStats;
         
-        if (!cloneStats && !viewStats && historicalTrafficData && historicalTrafficData.repositories[repoName]) {
+        // If API failed, try historical data
+        if ((!cloneStats || !viewStats) && historicalTrafficData && historicalTrafficData.repositories[repoName]) {
             const repoHistory = historicalTrafficData.repositories[repoName];
-            finalCloneStats = { count: repoHistory.totalClones || 0, uniques: 0 };
-            finalViewStats = { count: repoHistory.totalViews || 0, uniques: 0 };
-            console.log(`📊 Using historical data for ${repoName}: ${finalCloneStats.count} clones, ${finalViewStats.count} views`);
+            if (!cloneStats && repoHistory.totalClones) {
+                finalCloneStats = { count: repoHistory.totalClones || 0, uniques: 0 };
+                console.log(`📊 Fallback: Using historical clone data for ${repoName}: ${finalCloneStats.count}`);
+            }
+            if (!viewStats && repoHistory.totalViews) {
+                finalViewStats = { count: repoHistory.totalViews || 0, uniques: 0 };
+                console.log(`📊 Fallback: Using historical view data for ${repoName}: ${finalViewStats.count}`);
+            }
+        }
+        
+        // Last resort: if still no data, set to null (will show 0 or N.A in UI)
+        if (!finalCloneStats) {
+            finalCloneStats = null;
+            console.log(`⚠️ No clone data available for ${repoName} (API failed, no historical data)`);
+        }
+        if (!finalViewStats) {
+            finalViewStats = null;
+            console.log(`⚠️ No view data available for ${repoName} (API failed, no historical data)`);
         }
         
         // Validate repoData - check for errors
@@ -360,19 +377,19 @@ function updateProjectCard(card, insights) {
     const insightsHTML = `
         <div class="insight-stats">
             ${insights.clones && insights.clones.count > 0 ? `
-            <div class="insight-stat" title="Total Clones (Last 14 days)">
+            <div class="insight-stat" title="Total Clones (All-Time from Historical Data)">
                 <span class="insight-icon">📦</span>
                 <span class="insight-value">${insights.clones.count || 0}</span>
             </div>
             ` : ''}
             ${insights.views && insights.views.count > 0 ? `
-            <div class="insight-stat" title="Total Views (Last 14 days)">
+            <div class="insight-stat" title="Total Views (All-Time from Historical Data)">
                 <span class="insight-icon">👁️</span>
                 <span class="insight-value">${insights.views.count || 0}</span>
             </div>
             ` : ''}
             ${!hasData ? `
-            <div class="insight-stat" style="opacity: 0.6;" title="Statistics require GitHub token">
+            <div class="insight-stat" style="opacity: 0.6;" title="No statistics available (API failed, no historical data)">
                 <span class="insight-icon">ℹ️</span>
                 <span class="insight-value" style="font-size: 0.85rem;">N.A</span>
             </div>
