@@ -26,7 +26,9 @@ const REPOS = [
     'Intelligent-Resume-Builder',
     'Privacy-Focused-Web-Analytics-Dashboard',
     'os-hiring-hare',
-    'SudokuSandbox'
+    'SudokuSandbox',
+    'Gemini3Flash-Powered-LiteTracker-Dashboard',
+    'Unified-Email-Solution'
 ];
 
 function makeRequest(url) {
