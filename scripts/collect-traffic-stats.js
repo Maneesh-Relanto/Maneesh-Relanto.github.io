@@ -46,10 +46,16 @@ function makeRequest(url) {
             res.on('data', (chunk) => data += chunk);
             res.on('end', () => {
                 if (res.statusCode === 200) {
-                    resolve(JSON.parse(data));
+                    resolve({
+                        data: JSON.parse(data),
+                        headers: res.headers
+                    });
                 } else {
                     console.error(`Failed to fetch ${url}: ${res.statusCode}`);
-                    resolve(null);
+                    resolve({
+                        data: null,
+                        headers: {}
+                    });
                 }
             });
         }).on('error', reject);
@@ -62,23 +68,27 @@ async function fetchTrafficData(repo) {
     const prsUrl = `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repo}/pulls?state=all&per_page=1`;
     const contributorsUrl = `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repo}/contributors?per_page=100`;
 
-    const [clones, views, prsResponse, contributors] = await Promise.all([
+    const [clonesRes, viewsRes, prsRes, contributorsRes] = await Promise.all([
         makeRequest(clonesUrl),
         makeRequest(viewsUrl),
         makeRequest(prsUrl),
         makeRequest(contributorsUrl)
     ]);
     
-    // Calculate PR count from Link header or array length
+    // Extract PR count from Link header (contains pagination info with total)
     let prCount = 0;
-    if (prsResponse && Array.isArray(prsResponse)) {
-        prCount = prsResponse.length;
+    if (prsRes.headers.link) {
+        // Link header format: <url?page=2>; rel="next", <url?page=5>; rel="last"
+        const lastMatch = prsRes.headers.link.match(/page=(\d+)>;\s*rel="last"/);
+        if (lastMatch) {
+            prCount = parseInt(lastMatch[1], 10);
+        }
     }
     
     // Calculate total commits from contributors
     let commitCount = 0;
-    if (contributors && Array.isArray(contributors)) {
-        commitCount = contributors.reduce((sum, contributor) => 
+    if (contributorsRes.data && Array.isArray(contributorsRes.data)) {
+        commitCount = contributorsRes.data.reduce((sum, contributor) => 
             sum + (contributor.contributions || 0), 0
         );
     }
@@ -86,13 +96,13 @@ async function fetchTrafficData(repo) {
     return {
         repo,
         date: new Date().toISOString().split('T')[0],
-        clones: clones ? {
-            count: clones.count || 0,
-            uniques: clones.uniques || 0
+        clones: clonesRes.data ? {
+            count: clonesRes.data.count || 0,
+            uniques: clonesRes.data.uniques || 0
         } : { count: 0, uniques: 0 },
-        views: views ? {
-            count: views.count || 0,
-            uniques: views.uniques || 0
+        views: viewsRes.data ? {
+            count: viewsRes.data.count || 0,
+            uniques: viewsRes.data.uniques || 0
         } : { count: 0, uniques: 0 },
         prs: prCount,
         commits: commitCount
