@@ -65,7 +65,7 @@ function makeRequest(url) {
 async function fetchTrafficData(repo) {
     const clonesUrl = `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repo}/traffic/clones`;
     const viewsUrl = `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repo}/traffic/views`;
-    const prsUrl = `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repo}/pulls?state=all&per_page=1`;
+    const prsUrl = `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repo}/pulls?state=all&per_page=100`;
     const contributorsUrl = `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${repo}/contributors?per_page=100`;
 
     const [clonesRes, viewsRes, prsRes, contributorsRes] = await Promise.all([
@@ -75,14 +75,20 @@ async function fetchTrafficData(repo) {
         makeRequest(contributorsUrl)
     ]);
     
-    // Extract PR count from Link header (contains pagination info with total)
+    // Extract PR count: with per_page=100, repos rarely have more PRs
+    // First check Link header for pagination, then fall back to array length
     let prCount = 0;
     if (prsRes.headers.link) {
         // Link header format: <url?page=2>; rel="next", <url?page=5>; rel="last"
         const lastMatch = prsRes.headers.link.match(/page=(\d+)>;\s*rel="last"/);
         if (lastMatch) {
-            prCount = parseInt(lastMatch[1], 10);
+            prCount = parseInt(lastMatch[1], 10) * 100; // Multiply by per_page value
+        } else if (prsRes.data && Array.isArray(prsRes.data)) {
+            prCount = prsRes.data.length;
         }
+    } else if (prsRes.data && Array.isArray(prsRes.data)) {
+        // No pagination, just count the array
+        prCount = prsRes.data.length;
     }
     
     // Calculate total commits from contributors
