@@ -2,8 +2,8 @@ name: Collect Repository Traffic Stats
 
 on:
   schedule:
-    # Run daily at 00:00 UTC
-    - cron: '0 0 * * *'
+    # Run every 3 days at 00:00 UTC (1st, 4th, 7th, 10th, 13th, 16th, 19th, 22nd, 25th, 28th, 31st of each month)
+    - cron: '0 0 */3 * *'
   workflow_dispatch: # Allow manual trigger
 
 jobs:
