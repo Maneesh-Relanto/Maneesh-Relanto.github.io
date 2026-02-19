@@ -126,6 +126,7 @@ function loadHistoricalData() {
         totalViews: 0,
         totalPRs: 0,
         totalCommits: 0,
+        totalContributions: 0,
         repositories: {}
     };
 }
@@ -240,6 +241,10 @@ async function main() {
         historicalData.totalCommits += repo.totalCommits || 0;
     }
     
+    // Calculate contributions metric: commits + (PRs * 10)
+    // This gives more weight to PRs as they represent larger contributions
+    historicalData.totalContributions = historicalData.totalCommits + (historicalData.totalPRs * 10);
+    
     historicalData.lastUpdated = new Date().toISOString();
 
     saveHistoricalData(historicalData);
@@ -249,6 +254,7 @@ async function main() {
     console.log(`  Total Views (all-time): ${historicalData.totalViews.toLocaleString()}`);
     console.log(`  Total PRs: ${historicalData.totalPRs.toLocaleString()}`);
     console.log(`  Total Commits: ${historicalData.totalCommits.toLocaleString()}`);
+    console.log(`  Total Contributions: ${historicalData.totalContributions.toLocaleString()}`);
     console.log(`  Today's increment: +${totalClonesIncrement} clones, +${totalViewsIncrement} views`);
     console.log('\n✅ Traffic statistics updated successfully!');
 }

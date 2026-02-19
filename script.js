@@ -205,6 +205,13 @@ async function updateGlobalStats() {
         return;
     }
     
+    // Update contributions banner from historical data
+    const contributionsBanner = document.getElementById('total-contributions-banner');
+    if (contributionsBanner) {
+        contributionsBanner.textContent = (historicalTrafficData.totalContributions || 0).toLocaleString();
+        contributionsBanner.style.opacity = '1';
+    }
+    
     // Update hero banner with all metrics from historical data
     const prsBanner = document.getElementById('total-prs-banner');
     if (prsBanner) {
