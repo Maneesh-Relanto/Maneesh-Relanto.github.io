@@ -13,23 +13,10 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN || process.env.STATS_TOKEN;
 const GITHUB_USERNAME = process.env.GITHUB_USERNAME || 'Maneesh-Relanto';
 const GITHUB_API_BASE = 'https://api.github.com';
 const DATA_FILE = path.join(__dirname, '../data/traffic-history.json');
+const PORTFOLIO_REPO = 'Maneesh-Relanto.github.io'; // Exclude this repo from tracking
 
-// Repositories to track
-const REPOS = [
-    'Gemini3Flash-Powered-AI-Driven-HRMS',
-    'Gemini3Flash-Powered-Prediction-Engine-for-Employee-Lifecycle',
-    'Gemini3Flash-Powered-Resume-Builder',
-    'JSON-Assertion-Library',
-    'RBAC-algorithm',
-    'Rate-Limiter-algorithm',
-    'Progressbar-Slider-Utilities',
-    'Intelligent-Resume-Builder',
-    'Privacy-Focused-Web-Analytics-Dashboard',
-    'os-hiring-hare',
-    'SudokuSandbox',
-    'Gemini3Flash-Powered-LiteTracker-Dashboard',
-    'Unified-Email-Solution'
-];
+// Will be populated dynamically from GitHub API
+let REPOS = [];
 
 function makeRequest(url) {
     return new Promise((resolve, reject) => {
@@ -60,6 +47,35 @@ function makeRequest(url) {
             });
         }).on('error', reject);
     });
+}
+
+async function fetchAllPublicRepos() {
+    console.log('🔍 Fetching all public repositories...');
+    const repos = [];
+    let page = 1;
+    let hasMore = true;
+
+    while (hasMore) {
+        const url = `${GITHUB_API_BASE}/users/${GITHUB_USERNAME}/repos?type=public&per_page=100&page=${page}`;
+        const response = await makeRequest(url);
+        
+        if (!response.data || response.data.length === 0) {
+            hasMore = false;
+            break;
+        }
+
+        // Filter out the portfolio site itself
+        response.data.forEach(repo => {
+            if (repo.name !== PORTFOLIO_REPO) {
+                repos.push(repo.name);
+            }
+        });
+
+        page++;
+    }
+
+    console.log(`✅ Found ${repos.length} public repositories (excluding ${PORTFOLIO_REPO})`);
+    return repos;
 }
 
 async function fetchTrafficData(repo) {
@@ -145,6 +161,14 @@ async function main() {
 
     if (!GITHUB_TOKEN) {
         console.error('❌ GITHUB_TOKEN environment variable is not set');
+        process.exit(1);
+    }
+
+    // Dynamically fetch all public repos
+    REPOS = await fetchAllPublicRepos();
+    
+    if (REPOS.length === 0) {
+        console.error('❌ No public repositories found');
         process.exit(1);
     }
 
