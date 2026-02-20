@@ -14,6 +14,9 @@ const GITHUB_USERNAME = process.env.GITHUB_USERNAME || 'Maneesh-Relanto';
 const GITHUB_API_BASE = 'https://api.github.com';
 const DATA_FILE = path.join(__dirname, '../data/traffic-history.json');
 const PORTFOLIO_REPO = 'Maneesh-Relanto.github.io'; // Exclude this repo from tracking
+const EXCLUDED_REPOS = [
+    'AWS---Hackathon---KIRO' // Excluded from tracking
+];
 
 // Will be populated dynamically from GitHub API
 let REPOS = [];
@@ -64,9 +67,9 @@ async function fetchAllPublicRepos() {
             break;
         }
 
-        // Filter out the portfolio site itself
+        // Filter out the portfolio site itself and any explicitly excluded repos
         response.data.forEach(repo => {
-            if (repo.name !== PORTFOLIO_REPO) {
+            if (repo.name !== PORTFOLIO_REPO && !EXCLUDED_REPOS.includes(repo.name)) {
                 repos.push(repo.name);
             }
         });
