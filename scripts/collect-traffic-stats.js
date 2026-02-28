@@ -3,13 +3,24 @@
 /**
  * Collect GitHub Repository Traffic Statistics
  *
- * Uses the GitHub ?per=day traffic API to fetch individual daily clone/view counts
- * (up to last 14 days) for every repository. Each run upserts those daily values into
- * the history store, and totals are recalculated from scratch as the sum of all stored
- * daily entries. This makes all counts immune to GitHub's API processing lag — if a
- * day's count is updated later by GitHub, the next run will correct it automatically.
+ * ALL-TIME COUNTING STRATEGY
+ * ──────────────────────────
+ * GitHub's Traffic API only exposes the last 14 days of clone/view data.
+ * To maintain accurate all-time totals we use a two-tier accumulator per repo:
  *
- * Schema v2: history entries store per-day actual counts, not rolling-window snapshots.
+ *   totalClones = legacyOffset.clones  +  sum(history[*].clones)
+ *                 ↑ all-time count           ↑ per-day count
+ *                   before v2 migration        since v2 migration
+ *
+ * legacyOffset is set ONCE during v1→v2 migration and is never zeroed again.
+ * When daily history entries age beyond 365 days they are absorbed back into
+ * legacyOffset before being dropped, so the all-time total never shrinks.
+ *
+ * Each daily run upserts per-day values for the last 14 days, so any data
+ * GitHub was still processing at a previous run gets corrected automatically.
+ *
+ * Schema v2: history entries store per-day actual counts (not rolling-window
+ *            snapshots). legacyOffset preserves pre-migration all-time counts.
  */
 
 const https = require('https');
@@ -25,6 +36,7 @@ const EXCLUDED_REPOS = [
     'AWS---Hackathon---KIRO' // Excluded from tracking
 ];
 const SCHEMA_VERSION = 2;
+const HISTORY_RETENTION_DAYS = 365; // keep 1 year of per-day detail
 
 // Will be populated dynamically from GitHub API
 let REPOS = [];
@@ -168,7 +180,7 @@ function saveHistoricalData(data) {
 }
 
 async function main() {
-    console.log('🚀 Starting traffic statistics collection (per-day mode)...');
+    console.log('🚀 Starting traffic statistics collection (all-time accumulator)...');
     console.log(`📅 Date: ${new Date().toISOString()}`);
 
     if (!GITHUB_TOKEN) {
@@ -186,38 +198,61 @@ async function main() {
 
     const historicalData = loadHistoricalData();
 
-    // ── Schema migration ────────────────────────────────────────────────────────
-    // v1 history entries stored rolling 14-day window totals (not per-day counts).
-    // Summing those would massively overcount. On first run of v2 we wipe history
-    // and totalClones/totalViews for every repo so they rebuild from accurate
-    // per-day data. PRs and commits are unaffected (they're point-in-time counts).
+    // ── Schema v1 → v2 migration ────────────────────────────────────────────────
+    //
+    // v1 stored rolling 14-day window TOTALS as a single number per run — summing
+    // those would massively overcount. On the first v2 run we:
+    //
+    //   1. Snapshot each repo's current v1 totalClones / totalViews into a
+    //      legacyOffset object — these represent ALL activity before this run.
+    //   2. Clear the v1-style history[] so it rebuilds from accurate per-day data.
+    //   3. Keep PRs and commits — they are already correct point-in-time counts.
+    //
+    // legacyOffset is NEVER zeroed again. It is the permanent baseline for all
+    // time before this tool started recording per-day data.
+    //
     if (!historicalData.schemaVersion || historicalData.schemaVersion < SCHEMA_VERSION) {
-        console.log('🔄 Migrating to per-day schema (v2) — resetting clone/view history...');
+        console.log('🔄 Migrating to all-time accumulator schema (v2)...');
+        let migratedRepos = 0;
         for (const repoName in historicalData.repositories) {
-            historicalData.repositories[repoName].history     = [];
-            historicalData.repositories[repoName].totalClones = 0;
-            historicalData.repositories[repoName].totalViews  = 0;
+            const repo = historicalData.repositories[repoName];
+            // Preserve existing accumulated totals as the legacy baseline
+            repo.legacyOffset = {
+                clones: repo.totalClones || 0,
+                views:  repo.totalViews  || 0
+            };
+            // Clear v1 history — it cannot be summed accurately
+            repo.history     = [];
+            repo.totalClones = 0; // will be recomputed as legacyOffset + per-day sum
+            repo.totalViews  = 0;
+            migratedRepos++;
         }
-        historicalData.totalClones     = 0;
-        historicalData.totalViews      = 0;
-        historicalData.schemaVersion   = SCHEMA_VERSION;
-        console.log('✅ Migration complete — will rebuild from last 14 days of per-day data');
+        historicalData.schemaVersion = SCHEMA_VERSION;
+        console.log(`✅ Migration complete — preserved legacy offsets for ${migratedRepos} repos`);
+        console.log('   Per-day history will be rebuilt from the last 14 days of GitHub data');
     }
     // ────────────────────────────────────────────────────────────────────────────
 
     console.log(`📊 Fetching per-day traffic for ${REPOS.length} repositories...`);
+
+    // Cutoff date: entries older than HISTORY_RETENTION_DAYS get absorbed into
+    // legacyOffset before being dropped, so the all-time total never shrinks.
+    const retentionCutoff = new Date();
+    retentionCutoff.setDate(retentionCutoff.getDate() - HISTORY_RETENTION_DAYS);
+    const retentionCutoffStr = retentionCutoff.toISOString().split('T')[0];
 
     for (const repo of REPOS) {
         try {
             console.log(`  📦 ${repo}...`);
             const data = await fetchTrafficData(repo);
 
-            // Initialize repo entry if it doesn't exist yet
+            // Initialise repo entry for brand-new repos
             if (!historicalData.repositories[repo]) {
                 historicalData.repositories[repo] = {
-                    totalClones: 0,
-                    totalViews:  0,
-                    totalPRs:    0,
+                    legacyOffset: { clones: 0, views: 0 },
+                    totalClones:  0,
+                    totalViews:   0,
+                    totalPRs:     0,
                     totalCommits: 0,
                     history: []
                 };
@@ -225,11 +260,17 @@ async function main() {
 
             const repoData = historicalData.repositories[repo];
 
+            // Ensure legacyOffset exists (repos added after migration won't have it yet)
+            if (!repoData.legacyOffset) {
+                repoData.legacyOffset = { clones: 0, views: 0 };
+            }
+
+            // ── Step 1: Upsert per-day values from the API ──────────────────────
             // Build a date-keyed map for O(1) upserts
             const historyByDate = {};
             repoData.history.forEach(entry => { historyByDate[entry.date] = entry; });
 
-            // Upsert each day's clone count from the API response
+            // Upsert each day returned by GitHub (covers last 14 days)
             data.clonesByDay.forEach(({ date, count, uniques }) => {
                 if (historyByDate[date]) {
                     historyByDate[date].clones        = count;
@@ -239,7 +280,6 @@ async function main() {
                 }
             });
 
-            // Upsert each day's view count from the API response
             data.viewsByDay.forEach(({ date, count, uniques }) => {
                 if (historyByDate[date]) {
                     historyByDate[date].views        = count;
@@ -249,18 +289,36 @@ async function main() {
                 }
             });
 
-            // Rebuild sorted history array and cap at 90 days
-            repoData.history = Object.values(historyByDate)
-                .sort((a, b) => a.date.localeCompare(b.date))
-                .slice(-90);
+            // ── Step 2: Sort and apply retention window ─────────────────────────
+            // Entries older than HISTORY_RETENTION_DAYS are absorbed into
+            // legacyOffset BEFORE being dropped — counts are never lost.
+            const allEntries = Object.values(historyByDate)
+                .sort((a, b) => a.date.localeCompare(b.date));
 
-            // Recalculate totals from scratch — sum of all stored daily values
-            repoData.totalClones  = repoData.history.reduce((sum, e) => sum + (e.clones || 0), 0);
-            repoData.totalViews   = repoData.history.reduce((sum, e) => sum + (e.views  || 0), 0);
+            const toRetain = [];
+            for (const entry of allEntries) {
+                if (entry.date < retentionCutoffStr) {
+                    // Absorb this entry's counts into the permanent baseline
+                    repoData.legacyOffset.clones += (entry.clones || 0);
+                    repoData.legacyOffset.views  += (entry.views  || 0);
+                } else {
+                    toRetain.push(entry);
+                }
+            }
+            repoData.history = toRetain;
+
+            // ── Step 3: Compute all-time totals ─────────────────────────────────
+            //   totalClones = legacyOffset (all history before v2 + absorbed aged entries)
+            //               + sum of every per-day entry still in history[]
+            const historySumClones = repoData.history.reduce((sum, e) => sum + (e.clones || 0), 0);
+            const historySumViews  = repoData.history.reduce((sum, e) => sum + (e.views  || 0), 0);
+
+            repoData.totalClones  = repoData.legacyOffset.clones + historySumClones;
+            repoData.totalViews   = repoData.legacyOffset.views  + historySumViews;
             repoData.totalPRs     = data.prs;
             repoData.totalCommits = data.commits;
 
-            console.log(`    ✅ ${repoData.totalClones} clones across ${repoData.history.length} days | ${repoData.totalViews} views | ${data.prs} PRs | ${data.commits} commits`);
+            console.log(`    ✅ All-time: ${repoData.totalClones} clones (${repoData.legacyOffset.clones} legacy + ${historySumClones} tracked) | ${repoData.totalViews} views | ${data.prs} PRs | ${data.commits} commits`);
 
         } catch (error) {
             console.error(`  ❌ Error fetching data for ${repo}:`, error.message);
@@ -270,7 +328,7 @@ async function main() {
         await new Promise(resolve => setTimeout(resolve, 100));
     }
 
-    // Recalculate all global totals by summing repo-level totals
+    // ── Recompute global totals from all repo-level totals ──────────────────────
     historicalData.totalClones  = 0;
     historicalData.totalViews   = 0;
     historicalData.totalPRs     = 0;
@@ -290,11 +348,11 @@ async function main() {
 
     saveHistoricalData(historicalData);
 
-    console.log('\n📈 Summary:');
-    console.log(`  Total Clones  (per-day accurate): ${historicalData.totalClones.toLocaleString()}`);
-    console.log(`  Total Views   (per-day accurate): ${historicalData.totalViews.toLocaleString()}`);
-    console.log(`  Total PRs:    ${historicalData.totalPRs.toLocaleString()}`);
-    console.log(`  Total Commits: ${historicalData.totalCommits.toLocaleString()}`);
+    console.log('\n📈 All-Time Summary:');
+    console.log(`  Total Clones  : ${historicalData.totalClones.toLocaleString()}`);
+    console.log(`  Total Views   : ${historicalData.totalViews.toLocaleString()}`);
+    console.log(`  Total PRs     : ${historicalData.totalPRs.toLocaleString()}`);
+    console.log(`  Total Commits : ${historicalData.totalCommits.toLocaleString()}`);
     console.log(`  Total Contributions: ${historicalData.totalContributions.toLocaleString()}`);
     console.log('\n✅ Traffic statistics updated successfully!');
 }
