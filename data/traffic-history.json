@@ -1,1916 +1,1991 @@
 {
-  "lastUpdated": "2026-02-28T00:18:50.638Z",
-  "totalClones": 3241,
-  "totalViews": 1137,
+  "lastUpdated": "2026-03-01T00:23:42.024Z",
+  "totalClones": 3926,
+  "totalViews": 1611,
   "repositories": {
     "Gemini3Flash-Powered-AI-Driven-HRMS": {
-      "totalClones": 124,
+      "totalClones": 126,
       "totalViews": 11,
       "history": [
         {
-          "date": "2026-02-03",
-          "clones": 120,
-          "views": 11
-        },
-        {
-          "date": "2026-02-04",
-          "clones": 120,
-          "views": 11
-        },
-        {
-          "date": "2026-02-05",
-          "clones": 120,
-          "views": 11,
-          "prs": 0,
-          "commits": 15
-        },
-        {
-          "date": "2026-02-06",
-          "clones": 120,
-          "views": 11,
-          "prs": 0,
-          "commits": 15
-        },
-        {
-          "date": "2026-02-07",
-          "clones": 121,
-          "views": 11,
-          "prs": 0,
-          "commits": 15
-        },
-        {
-          "date": "2026-02-08",
-          "clones": 121,
-          "views": 11,
-          "prs": 0,
-          "commits": 15
-        },
-        {
-          "date": "2026-02-09",
-          "clones": 121,
-          "views": 11,
-          "prs": 0,
-          "commits": 15
-        },
-        {
-          "date": "2026-02-10",
-          "clones": 122,
-          "views": 11,
-          "prs": 0,
-          "commits": 15
-        },
-        {
-          "date": "2026-02-11",
-          "clones": 123,
-          "views": 11,
-          "prs": 0,
-          "commits": 15
-        },
-        {
-          "date": "2026-02-12",
-          "clones": 124,
-          "views": 11,
-          "prs": 0,
-          "commits": 15
-        },
-        {
-          "date": "2026-02-13",
-          "clones": 124,
-          "views": 11,
-          "prs": 0,
-          "commits": 15
-        },
-        {
           "date": "2026-02-14",
-          "clones": 8,
-          "views": 4,
-          "prs": 0,
-          "commits": 15
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-15",
-          "clones": 7,
-          "views": 2,
-          "prs": 0,
-          "commits": 15
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-16",
-          "clones": 6,
-          "views": 1,
-          "prs": 0,
-          "commits": 15
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-17",
-          "clones": 5,
-          "views": 1,
-          "prs": 0,
-          "commits": 15
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-18",
-          "clones": 4,
-          "views": 1,
-          "prs": 0,
-          "commits": 15
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-19",
-          "clones": 4,
-          "views": 1,
-          "prs": 0,
-          "commits": 15
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-20",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-21",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-22",
-          "clones": 3,
-          "views": 1,
-          "prs": 0,
-          "commits": 15
+          "clones": 2,
+          "clonesUniques": 2,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-23",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-24",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-25",
-          "clones": 3,
-          "views": 1,
-          "prs": 0,
-          "commits": 15
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
-          "date": "2026-02-28",
-          "clones": 2,
-          "views": 1,
-          "prs": 0,
-          "commits": 15
+          "date": "2026-02-26",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-27",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         }
       ],
       "totalPRs": 0,
-      "totalCommits": 15
+      "totalCommits": 15,
+      "legacyOffset": {
+        "clones": 124,
+        "views": 11
+      }
     },
     "Gemini3Flash-Powered-Prediction-Engine-for-Employee-Lifecycle": {
       "totalClones": 79,
-      "totalViews": 30,
+      "totalViews": 32,
       "history": [
         {
-          "date": "2026-02-03",
-          "clones": 74,
-          "views": 26
-        },
-        {
-          "date": "2026-02-04",
-          "clones": 75,
-          "views": 26
-        },
-        {
-          "date": "2026-02-05",
-          "clones": 75,
-          "views": 26,
-          "prs": 0,
-          "commits": 10
-        },
-        {
-          "date": "2026-02-06",
-          "clones": 75,
-          "views": 26,
-          "prs": 0,
-          "commits": 10
-        },
-        {
-          "date": "2026-02-07",
-          "clones": 76,
-          "views": 26,
-          "prs": 0,
-          "commits": 10
-        },
-        {
-          "date": "2026-02-08",
-          "clones": 76,
-          "views": 27,
-          "prs": 0,
-          "commits": 10
-        },
-        {
-          "date": "2026-02-09",
-          "clones": 77,
-          "views": 27,
-          "prs": 0,
-          "commits": 10
-        },
-        {
-          "date": "2026-02-10",
-          "clones": 77,
-          "views": 27,
-          "prs": 0,
-          "commits": 10
-        },
-        {
-          "date": "2026-02-11",
-          "clones": 78,
-          "views": 28,
-          "prs": 0,
-          "commits": 10
-        },
-        {
-          "date": "2026-02-12",
-          "clones": 8,
-          "views": 5,
-          "prs": 0,
-          "commits": 10
-        },
-        {
-          "date": "2026-02-13",
-          "clones": 6,
-          "views": 3,
-          "prs": 0,
-          "commits": 10
-        },
-        {
           "date": "2026-02-14",
-          "clones": 6,
-          "views": 3,
-          "prs": 0,
-          "commits": 10
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-15",
-          "clones": 7,
-          "views": 2,
-          "prs": 0,
-          "commits": 10
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 1,
+          "viewsUniques": 1
         },
         {
           "date": "2026-02-16",
-          "clones": 6,
-          "views": 2,
-          "prs": 0,
-          "commits": 10
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-17",
-          "clones": 6,
-          "views": 3,
-          "prs": 0,
-          "commits": 10
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-18",
-          "clones": 5,
-          "views": 3,
-          "prs": 0,
-          "commits": 10
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-19",
-          "clones": 5,
-          "views": 3,
-          "prs": 0,
-          "commits": 10
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-20",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-21",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-22",
-          "clones": 4,
-          "views": 2,
-          "prs": 0,
-          "commits": 10
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-23",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-24",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 1,
+          "viewsUniques": 1
         },
         {
           "date": "2026-02-25",
-          "clones": 2,
-          "views": 1,
-          "prs": 0,
-          "commits": 10
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
-          "date": "2026-02-28",
-          "clones": 1,
-          "views": 2,
-          "prs": 0,
-          "commits": 10
+          "date": "2026-02-26",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-27",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         }
       ],
       "totalPRs": 0,
-      "totalCommits": 10
+      "totalCommits": 10,
+      "legacyOffset": {
+        "clones": 79,
+        "views": 30
+      }
     },
     "Gemini3Flash-Powered-Resume-Builder": {
-      "totalClones": 195,
+      "totalClones": 196,
       "totalViews": 26,
       "history": [
         {
-          "date": "2026-02-03",
-          "clones": 192,
-          "views": 26
-        },
-        {
-          "date": "2026-02-04",
-          "clones": 192,
-          "views": 26
-        },
-        {
-          "date": "2026-02-05",
-          "clones": 192,
-          "views": 26,
-          "prs": 0,
-          "commits": 23
-        },
-        {
-          "date": "2026-02-06",
-          "clones": 192,
-          "views": 26,
-          "prs": 0,
-          "commits": 23
-        },
-        {
-          "date": "2026-02-07",
-          "clones": 193,
-          "views": 26,
-          "prs": 0,
-          "commits": 23
-        },
-        {
-          "date": "2026-02-08",
-          "clones": 193,
-          "views": 26,
-          "prs": 0,
-          "commits": 23
-        },
-        {
-          "date": "2026-02-09",
-          "clones": 193,
-          "views": 26,
-          "prs": 0,
-          "commits": 23
-        },
-        {
-          "date": "2026-02-10",
-          "clones": 104,
-          "views": 8,
-          "prs": 0,
-          "commits": 23
-        },
-        {
-          "date": "2026-02-11",
-          "clones": 13,
-          "views": 3,
-          "prs": 0,
-          "commits": 23
-        },
-        {
-          "date": "2026-02-12",
-          "clones": 10,
-          "views": 1,
-          "prs": 0,
-          "commits": 23
-        },
-        {
-          "date": "2026-02-13",
-          "clones": 6,
-          "views": 1,
-          "prs": 0,
-          "commits": 23
-        },
-        {
           "date": "2026-02-14",
-          "clones": 5,
-          "views": 1,
-          "prs": 0,
-          "commits": 23
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-15",
-          "clones": 6,
+          "clones": 0,
+          "clonesUniques": 0,
           "views": 0,
-          "prs": 0,
-          "commits": 23
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-16",
-          "clones": 5,
+          "clones": 0,
+          "clonesUniques": 0,
           "views": 0,
-          "prs": 0,
-          "commits": 23
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-17",
-          "clones": 4,
+          "clones": 0,
+          "clonesUniques": 0,
           "views": 0,
-          "prs": 0,
-          "commits": 23
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-18",
-          "clones": 3,
+          "clones": 0,
+          "clonesUniques": 0,
           "views": 0,
-          "prs": 0,
-          "commits": 23
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-19",
-          "clones": 3,
+          "clones": 0,
+          "clonesUniques": 0,
           "views": 0,
-          "prs": 0,
-          "commits": 23
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-20",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-21",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-22",
-          "clones": 2,
+          "clones": 0,
+          "clonesUniques": 0,
           "views": 0,
-          "prs": 0,
-          "commits": 23
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-23",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-24",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-25",
           "clones": 1,
+          "clonesUniques": 1,
           "views": 0,
-          "prs": 0,
-          "commits": 23
+          "viewsUniques": 0
         },
         {
-          "date": "2026-02-28",
-          "clones": 2,
+          "date": "2026-02-26",
+          "clones": 0,
+          "clonesUniques": 0,
           "views": 0,
-          "prs": 0,
-          "commits": 23
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-27",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         }
       ],
       "totalPRs": 0,
-      "totalCommits": 23
+      "totalCommits": 23,
+      "legacyOffset": {
+        "clones": 195,
+        "views": 26
+      }
     },
     "JSON-Assertion-Library": {
-      "totalClones": 128,
-      "totalViews": 64,
+      "totalClones": 133,
+      "totalViews": 67,
       "history": [
         {
-          "date": "2026-02-03",
-          "clones": 127,
-          "views": 61
-        },
-        {
-          "date": "2026-02-04",
-          "clones": 127,
-          "views": 61
-        },
-        {
-          "date": "2026-02-05",
-          "clones": 11,
-          "views": 11,
-          "prs": 1,
-          "commits": 19
-        },
-        {
-          "date": "2026-02-06",
-          "clones": 9,
-          "views": 11,
-          "prs": 1,
-          "commits": 19
-        },
-        {
-          "date": "2026-02-07",
-          "clones": 9,
-          "views": 11,
-          "prs": 1,
-          "commits": 19
-        },
-        {
-          "date": "2026-02-08",
-          "clones": 9,
-          "views": 10,
-          "prs": 1,
-          "commits": 19
-        },
-        {
-          "date": "2026-02-09",
-          "clones": 9,
-          "views": 10,
-          "prs": 1,
-          "commits": 19
-        },
-        {
-          "date": "2026-02-10",
-          "clones": 9,
-          "views": 9,
-          "prs": 1,
-          "commits": 19
-        },
-        {
-          "date": "2026-02-11",
-          "clones": 9,
-          "views": 9,
-          "prs": 1,
-          "commits": 19
-        },
-        {
-          "date": "2026-02-12",
-          "clones": 8,
-          "views": 9,
-          "prs": 1,
-          "commits": 19
-        },
-        {
-          "date": "2026-02-13",
-          "clones": 8,
-          "views": 9,
-          "prs": 1,
-          "commits": 19
-        },
-        {
           "date": "2026-02-14",
-          "clones": 8,
-          "views": 2,
-          "prs": 1,
-          "commits": 19
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-15",
-          "clones": 7,
+          "clones": 0,
+          "clonesUniques": 0,
           "views": 0,
-          "prs": 1,
-          "commits": 19
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-16",
-          "clones": 7,
+          "clones": 0,
+          "clonesUniques": 0,
           "views": 0,
-          "prs": 1,
-          "commits": 19
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-17",
-          "clones": 7,
+          "clones": 2,
+          "clonesUniques": 1,
           "views": 0,
-          "prs": 1,
-          "commits": 19
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-18",
-          "clones": 6,
+          "clones": 0,
+          "clonesUniques": 0,
           "views": 0,
-          "prs": 1,
-          "commits": 19
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-19",
-          "clones": 6,
+          "clones": 0,
+          "clonesUniques": 0,
           "views": 0,
-          "prs": 1,
-          "commits": 19
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-20",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-21",
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 1,
+          "viewsUniques": 1
         },
         {
           "date": "2026-02-22",
-          "clones": 4,
+          "clones": 0,
+          "clonesUniques": 0,
           "views": 0,
-          "prs": 12,
-          "commits": 19
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-23",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 1,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-24",
+          "clones": 2,
+          "clonesUniques": 1,
+          "views": 1,
+          "viewsUniques": 1
         },
         {
           "date": "2026-02-25",
-          "clones": 5,
-          "views": 2,
-          "prs": 12,
-          "commits": 19
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
-          "date": "2026-02-28",
-          "clones": 5,
-          "views": 3,
-          "prs": 12,
-          "commits": 19
+          "date": "2026-02-26",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-27",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         }
       ],
       "totalPRs": 12,
-      "totalCommits": 19
+      "totalCommits": 19,
+      "legacyOffset": {
+        "clones": 128,
+        "views": 64
+      }
     },
     "RBAC-algorithm": {
-      "totalClones": 317,
-      "totalViews": 226,
+      "totalClones": 470,
+      "totalViews": 363,
       "history": [
         {
-          "date": "2026-02-03",
-          "clones": 144,
-          "views": 89
-        },
-        {
-          "date": "2026-02-04",
-          "clones": 144,
-          "views": 89
-        },
-        {
-          "date": "2026-02-05",
-          "clones": 170,
-          "views": 68,
-          "prs": 1,
-          "commits": 45
-        },
-        {
-          "date": "2026-02-06",
-          "clones": 169,
-          "views": 69,
-          "prs": 1,
-          "commits": 45
-        },
-        {
-          "date": "2026-02-07",
-          "clones": 169,
-          "views": 71,
-          "prs": 1,
-          "commits": 45
-        },
-        {
-          "date": "2026-02-08",
-          "clones": 168,
-          "views": 59,
-          "prs": 1,
-          "commits": 45
-        },
-        {
-          "date": "2026-02-09",
-          "clones": 167,
-          "views": 58,
-          "prs": 1,
-          "commits": 45
-        },
-        {
-          "date": "2026-02-10",
-          "clones": 168,
-          "views": 59,
-          "prs": 1,
-          "commits": 45
-        },
-        {
-          "date": "2026-02-11",
-          "clones": 166,
-          "views": 58,
-          "prs": 1,
-          "commits": 45
-        },
-        {
-          "date": "2026-02-12",
-          "clones": 164,
-          "views": 58,
-          "prs": 1,
-          "commits": 45
-        },
-        {
-          "date": "2026-02-13",
-          "clones": 164,
-          "views": 60,
-          "prs": 1,
-          "commits": 45
-        },
-        {
           "date": "2026-02-14",
-          "clones": 163,
-          "views": 60,
-          "prs": 1,
-          "commits": 45
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 1,
+          "viewsUniques": 1
         },
         {
           "date": "2026-02-15",
-          "clones": 163,
-          "views": 59,
-          "prs": 1,
-          "commits": 45
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-16",
-          "clones": 162,
-          "views": 59,
-          "prs": 1,
-          "commits": 45
+          "clones": 2,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-17",
-          "clones": 161,
-          "views": 58,
-          "prs": 1,
-          "commits": 45
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-18",
-          "clones": 76,
-          "views": 23,
-          "prs": 1,
-          "commits": 45
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 1,
+          "viewsUniques": 1
         },
         {
           "date": "2026-02-19",
-          "clones": 9,
-          "views": 7,
-          "prs": 1,
-          "commits": 45
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 1,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-20",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-21",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-22",
-          "clones": 6,
-          "views": 6,
-          "prs": 6,
-          "commits": 45
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-23",
+          "clones": 144,
+          "clonesUniques": 52,
+          "views": 118,
+          "viewsUniques": 23
+        },
+        {
+          "date": "2026-02-24",
+          "clones": 4,
+          "clonesUniques": 4,
+          "views": 13,
+          "viewsUniques": 3
         },
         {
           "date": "2026-02-25",
-          "clones": 147,
-          "views": 123,
-          "prs": 12,
-          "commits": 57
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 2,
+          "viewsUniques": 2
         },
         {
-          "date": "2026-02-28",
-          "clones": 152,
-          "views": 137,
-          "prs": 12,
-          "commits": 57
+          "date": "2026-02-26",
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 1,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-27",
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
         }
       ],
       "totalPRs": 12,
-      "totalCommits": 57
+      "totalCommits": 57,
+      "legacyOffset": {
+        "clones": 317,
+        "views": 226
+      }
     },
     "Rate-Limiter-algorithm": {
-      "totalClones": 21,
-      "totalViews": 37,
+      "totalClones": 27,
+      "totalViews": 40,
       "history": [
         {
-          "date": "2026-02-03",
-          "clones": 20,
-          "views": 33
-        },
-        {
-          "date": "2026-02-04",
-          "clones": 20,
-          "views": 33
-        },
-        {
-          "date": "2026-02-05",
-          "clones": 16,
-          "views": 10,
-          "prs": 0,
-          "commits": 56
-        },
-        {
-          "date": "2026-02-06",
-          "clones": 13,
-          "views": 10,
-          "prs": 0,
-          "commits": 56
-        },
-        {
-          "date": "2026-02-07",
-          "clones": 13,
-          "views": 10,
-          "prs": 0,
-          "commits": 56
-        },
-        {
-          "date": "2026-02-08",
-          "clones": 12,
-          "views": 7,
-          "prs": 0,
-          "commits": 56
-        },
-        {
-          "date": "2026-02-09",
-          "clones": 12,
-          "views": 7,
-          "prs": 0,
-          "commits": 56
-        },
-        {
-          "date": "2026-02-10",
-          "clones": 13,
-          "views": 8,
-          "prs": 0,
-          "commits": 56
-        },
-        {
-          "date": "2026-02-11",
-          "clones": 12,
-          "views": 5,
-          "prs": 0,
-          "commits": 56
-        },
-        {
-          "date": "2026-02-12",
-          "clones": 12,
-          "views": 5,
-          "prs": 0,
-          "commits": 56
-        },
-        {
-          "date": "2026-02-13",
-          "clones": 11,
-          "views": 5,
-          "prs": 0,
-          "commits": 56
-        },
-        {
           "date": "2026-02-14",
-          "clones": 10,
-          "views": 4,
-          "prs": 0,
-          "commits": 56
+          "clones": 3,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-15",
-          "clones": 10,
-          "views": 3,
-          "prs": 0,
-          "commits": 56
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-16",
-          "clones": 9,
-          "views": 3,
-          "prs": 0,
-          "commits": 56
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-17",
-          "clones": 9,
-          "views": 3,
-          "prs": 0,
-          "commits": 56
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-18",
-          "clones": 8,
-          "views": 2,
-          "prs": 0,
-          "commits": 56
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-19",
-          "clones": 8,
-          "views": 2,
-          "prs": 0,
-          "commits": 56
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-20",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-21",
+          "clones": 3,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-22",
-          "clones": 7,
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-23",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-24",
+          "clones": 0,
+          "clonesUniques": 0,
           "views": 1,
-          "prs": 0,
-          "commits": 56
+          "viewsUniques": 1
         },
         {
           "date": "2026-02-25",
-          "clones": 6,
-          "views": 0,
-          "prs": 0,
-          "commits": 56
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 1,
+          "viewsUniques": 1
         },
         {
-          "date": "2026-02-28",
-          "clones": 6,
-          "views": 3,
-          "prs": 0,
-          "commits": 56
+          "date": "2026-02-26",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 1,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-27",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         }
       ],
       "totalPRs": 0,
-      "totalCommits": 56
+      "totalCommits": 56,
+      "legacyOffset": {
+        "clones": 21,
+        "views": 37
+      }
     },
     "Progressbar-Slider-Utilities": {
-      "totalClones": 33,
-      "totalViews": 29,
+      "totalClones": 38,
+      "totalViews": 33,
       "history": [
         {
-          "date": "2026-02-03",
-          "clones": 33,
-          "views": 26
-        },
-        {
-          "date": "2026-02-04",
-          "clones": 22,
-          "views": 26
-        },
-        {
-          "date": "2026-02-05",
-          "clones": 18,
-          "views": 7,
-          "prs": 0,
-          "commits": 46
-        },
-        {
-          "date": "2026-02-06",
-          "clones": 16,
-          "views": 7,
-          "prs": 0,
-          "commits": 46
-        },
-        {
-          "date": "2026-02-07",
-          "clones": 16,
-          "views": 6,
-          "prs": 0,
-          "commits": 46
-        },
-        {
-          "date": "2026-02-08",
-          "clones": 15,
-          "views": 2,
-          "prs": 0,
-          "commits": 46
-        },
-        {
-          "date": "2026-02-09",
-          "clones": 15,
-          "views": 2,
-          "prs": 0,
-          "commits": 46
-        },
-        {
-          "date": "2026-02-10",
-          "clones": 15,
-          "views": 2,
-          "prs": 0,
-          "commits": 46
-        },
-        {
-          "date": "2026-02-11",
-          "clones": 15,
-          "views": 2,
-          "prs": 0,
-          "commits": 46
-        },
-        {
-          "date": "2026-02-12",
-          "clones": 14,
-          "views": 3,
-          "prs": 0,
-          "commits": 46
-        },
-        {
-          "date": "2026-02-13",
-          "clones": 13,
-          "views": 3,
-          "prs": 0,
-          "commits": 46
-        },
-        {
           "date": "2026-02-14",
-          "clones": 11,
-          "views": 3,
-          "prs": 0,
-          "commits": 46
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-15",
-          "clones": 11,
-          "views": 2,
-          "prs": 0,
-          "commits": 46
+          "clones": 3,
+          "clonesUniques": 2,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-16",
-          "clones": 10,
-          "views": 2,
-          "prs": 0,
-          "commits": 46
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-17",
-          "clones": 9,
-          "views": 2,
-          "prs": 0,
-          "commits": 46
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-18",
-          "clones": 9,
-          "views": 2,
-          "prs": 0,
-          "commits": 46
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-19",
-          "clones": 9,
-          "views": 2,
-          "prs": 0,
-          "commits": 46
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-20",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 1,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-21",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 1,
+          "viewsUniques": 1
         },
         {
           "date": "2026-02-22",
-          "clones": 8,
-          "views": 3,
-          "prs": 0,
-          "commits": 46
+          "clones": 2,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-23",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 1,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-24",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-25",
-          "clones": 5,
-          "views": 4,
-          "prs": 0,
-          "commits": 46
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
-          "date": "2026-02-28",
-          "clones": 5,
-          "views": 3,
-          "prs": 0,
-          "commits": 46
+          "date": "2026-02-26",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-27",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 1,
+          "viewsUniques": 1
         }
       ],
       "totalPRs": 0,
-      "totalCommits": 46
+      "totalCommits": 46,
+      "legacyOffset": {
+        "clones": 33,
+        "views": 29
+      }
     },
     "Intelligent-Resume-Builder": {
-      "totalClones": 303,
-      "totalViews": 141,
+      "totalClones": 304,
+      "totalViews": 160,
       "history": [
         {
-          "date": "2026-02-03",
-          "clones": 302,
-          "views": 123
-        },
-        {
-          "date": "2026-02-04",
-          "clones": 302,
-          "views": 123
-        },
-        {
-          "date": "2026-02-05",
-          "clones": 302,
-          "views": 123,
-          "prs": 1,
-          "commits": 47
-        },
-        {
-          "date": "2026-02-06",
-          "clones": 302,
-          "views": 123,
-          "prs": 1,
-          "commits": 47
-        },
-        {
-          "date": "2026-02-07",
-          "clones": 303,
-          "views": 123,
-          "prs": 1,
-          "commits": 47
-        },
-        {
-          "date": "2026-02-08",
-          "clones": 303,
-          "views": 123,
-          "prs": 1,
-          "commits": 47
-        },
-        {
-          "date": "2026-02-09",
-          "clones": 215,
-          "views": 93,
-          "prs": 1,
-          "commits": 47
-        },
-        {
-          "date": "2026-02-10",
-          "clones": 12,
-          "views": 2,
-          "prs": 1,
-          "commits": 47
-        },
-        {
-          "date": "2026-02-11",
-          "clones": 9,
-          "views": 2,
-          "prs": 1,
-          "commits": 47
-        },
-        {
-          "date": "2026-02-12",
-          "clones": 7,
-          "views": 2,
-          "prs": 1,
-          "commits": 47
-        },
-        {
-          "date": "2026-02-13",
-          "clones": 6,
-          "views": 2,
-          "prs": 1,
-          "commits": 47
-        },
-        {
           "date": "2026-02-14",
-          "clones": 6,
+          "clones": 0,
+          "clonesUniques": 0,
           "views": 2,
-          "prs": 1,
-          "commits": 47
+          "viewsUniques": 2
         },
         {
           "date": "2026-02-15",
-          "clones": 6,
-          "views": 1,
-          "prs": 1,
-          "commits": 47
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-16",
-          "clones": 5,
-          "views": 3,
-          "prs": 1,
-          "commits": 47
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 2,
+          "viewsUniques": 1
         },
         {
           "date": "2026-02-17",
-          "clones": 4,
+          "clones": 0,
+          "clonesUniques": 0,
           "views": 2,
-          "prs": 1,
-          "commits": 47
+          "viewsUniques": 2
         },
         {
           "date": "2026-02-18",
-          "clones": 2,
-          "views": 4,
-          "prs": 1,
-          "commits": 47
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 3,
+          "viewsUniques": 3
         },
         {
           "date": "2026-02-19",
-          "clones": 2,
-          "views": 6,
-          "prs": 1,
-          "commits": 47
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-20",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-21",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-22",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-23",
           "clones": 1,
+          "clonesUniques": 1,
           "views": 9,
-          "prs": 21,
-          "commits": 47
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-24",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-25",
-          "clones": 1,
-          "views": 18,
-          "prs": 21,
-          "commits": 47
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
-          "date": "2026-02-28",
-          "clones": 1,
-          "views": 18,
-          "prs": 21,
-          "commits": 47
+          "date": "2026-02-26",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-27",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 1,
+          "viewsUniques": 1
         }
       ],
       "totalPRs": 21,
-      "totalCommits": 47
+      "totalCommits": 47,
+      "legacyOffset": {
+        "clones": 303,
+        "views": 141
+      }
     },
     "Privacy-Focused-Web-Analytics-Dashboard": {
-      "totalClones": 1236,
-      "totalViews": 182,
+      "totalClones": 1238,
+      "totalViews": 192,
       "history": [
         {
-          "date": "2026-02-03",
-          "clones": 662,
-          "views": 26
-        },
-        {
-          "date": "2026-02-04",
-          "clones": 662,
-          "views": 26
-        },
-        {
-          "date": "2026-02-05",
-          "clones": 1012,
-          "views": 125,
-          "prs": 1,
-          "commits": 347
-        },
-        {
-          "date": "2026-02-06",
-          "clones": 1228,
-          "views": 176,
-          "prs": 1,
-          "commits": 347
-        },
-        {
-          "date": "2026-02-07",
-          "clones": 1231,
-          "views": 178,
-          "prs": 1,
-          "commits": 347
-        },
-        {
-          "date": "2026-02-08",
-          "clones": 1233,
-          "views": 178,
-          "prs": 1,
-          "commits": 347
-        },
-        {
-          "date": "2026-02-09",
-          "clones": 1235,
-          "views": 178,
-          "prs": 1,
-          "commits": 347
-        },
-        {
-          "date": "2026-02-10",
-          "clones": 1235,
-          "views": 178,
-          "prs": 1,
-          "commits": 347
-        },
-        {
-          "date": "2026-02-11",
-          "clones": 1236,
-          "views": 178,
-          "prs": 1,
-          "commits": 347
-        },
-        {
-          "date": "2026-02-12",
-          "clones": 1236,
-          "views": 177,
-          "prs": 1,
-          "commits": 347
-        },
-        {
-          "date": "2026-02-13",
-          "clones": 810,
-          "views": 155,
-          "prs": 1,
-          "commits": 347
-        },
-        {
           "date": "2026-02-14",
-          "clones": 581,
-          "views": 155,
-          "prs": 1,
-          "commits": 347
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-15",
-          "clones": 579,
-          "views": 154,
-          "prs": 1,
-          "commits": 347
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-16",
-          "clones": 577,
-          "views": 154,
-          "prs": 1,
-          "commits": 347
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-17",
-          "clones": 577,
-          "views": 154,
-          "prs": 1,
-          "commits": 347
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-18",
-          "clones": 576,
-          "views": 152,
-          "prs": 1,
-          "commits": 347
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-19",
-          "clones": 226,
-          "views": 53,
-          "prs": 1,
-          "commits": 347
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 3,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-20",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 2,
+          "viewsUniques": 2
+        },
+        {
+          "date": "2026-02-21",
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-22",
-          "clones": 5,
-          "views": 5,
-          "prs": 32,
-          "commits": 347
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-23",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-24",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 2,
+          "viewsUniques": 2
         },
         {
           "date": "2026-02-25",
-          "clones": 3,
-          "views": 5,
-          "prs": 32,
-          "commits": 347
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
-          "date": "2026-02-28",
-          "clones": 2,
-          "views": 9,
-          "prs": 32,
-          "commits": 347
+          "date": "2026-02-26",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 2,
+          "viewsUniques": 2
+        },
+        {
+          "date": "2026-02-27",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 1,
+          "viewsUniques": 1
         }
       ],
-      "totalPRs": 32,
-      "totalCommits": 347
+      "totalPRs": 34,
+      "totalCommits": 351,
+      "legacyOffset": {
+        "clones": 1236,
+        "views": 182
+      }
     },
     "os-hiring-hare": {
-      "totalClones": 73,
+      "totalClones": 79,
       "totalViews": 27,
       "history": [
         {
-          "date": "2026-02-03",
-          "clones": 70,
-          "views": 25
-        },
-        {
-          "date": "2026-02-04",
-          "clones": 16,
-          "views": 25
-        },
-        {
-          "date": "2026-02-05",
-          "clones": 16,
-          "views": 15,
-          "prs": 0,
-          "commits": 32
-        },
-        {
-          "date": "2026-02-06",
-          "clones": 13,
-          "views": 17,
-          "prs": 0,
-          "commits": 32
-        },
-        {
-          "date": "2026-02-07",
-          "clones": 13,
-          "views": 17,
-          "prs": 0,
-          "commits": 32
-        },
-        {
-          "date": "2026-02-08",
-          "clones": 13,
-          "views": 17,
-          "prs": 0,
-          "commits": 32
-        },
-        {
-          "date": "2026-02-09",
-          "clones": 12,
-          "views": 16,
-          "prs": 0,
-          "commits": 32
-        },
-        {
-          "date": "2026-02-10",
-          "clones": 13,
-          "views": 16,
-          "prs": 0,
-          "commits": 32
-        },
-        {
-          "date": "2026-02-11",
-          "clones": 10,
-          "views": 15,
-          "prs": 0,
-          "commits": 32
-        },
-        {
-          "date": "2026-02-12",
-          "clones": 10,
-          "views": 14,
-          "prs": 0,
-          "commits": 32
-        },
-        {
-          "date": "2026-02-13",
-          "clones": 9,
-          "views": 13,
-          "prs": 0,
-          "commits": 32
-        },
-        {
           "date": "2026-02-14",
-          "clones": 8,
-          "views": 13,
-          "prs": 0,
-          "commits": 32
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-15",
-          "clones": 8,
-          "views": 8,
-          "prs": 0,
-          "commits": 32
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-16",
-          "clones": 7,
-          "views": 7,
-          "prs": 0,
-          "commits": 32
+          "clones": 3,
+          "clonesUniques": 2,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-17",
-          "clones": 6,
-          "views": 7,
-          "prs": 0,
-          "commits": 32
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-18",
-          "clones": 7,
-          "views": 4,
-          "prs": 0,
-          "commits": 32
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-19",
-          "clones": 5,
-          "views": 4,
-          "prs": 0,
-          "commits": 32
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-20",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-21",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-22",
-          "clones": 4,
-          "views": 2,
-          "prs": 0,
-          "commits": 32
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-23",
+          "clones": 2,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-24",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-25",
-          "clones": 5,
-          "views": 2,
-          "prs": 0,
-          "commits": 32
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
-          "date": "2026-02-28",
-          "clones": 5,
+          "date": "2026-02-26",
+          "clones": 0,
+          "clonesUniques": 0,
           "views": 0,
-          "prs": 0,
-          "commits": 32
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-27",
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
         }
       ],
       "totalPRs": 0,
-      "totalCommits": 32
+      "totalCommits": 32,
+      "legacyOffset": {
+        "clones": 73,
+        "views": 27
+      }
     },
     "SudokuSandbox": {
-      "totalClones": 3,
+      "totalClones": 4,
       "totalViews": 4,
       "history": [
         {
-          "date": "2026-02-03",
-          "clones": 1,
-          "views": 3
-        },
-        {
-          "date": "2026-02-04",
-          "clones": 1,
-          "views": 3
-        },
-        {
-          "date": "2026-02-05",
-          "clones": 1,
-          "views": 2,
-          "prs": 0,
-          "commits": 3
-        },
-        {
-          "date": "2026-02-06",
-          "clones": 1,
-          "views": 2,
-          "prs": 0,
-          "commits": 3
-        },
-        {
-          "date": "2026-02-07",
-          "clones": 1,
-          "views": 3,
-          "prs": 0,
-          "commits": 3
-        },
-        {
-          "date": "2026-02-08",
-          "clones": 2,
-          "views": 3,
-          "prs": 0,
-          "commits": 3
-        },
-        {
-          "date": "2026-02-09",
-          "clones": 2,
-          "views": 3,
-          "prs": 0,
-          "commits": 3
-        },
-        {
-          "date": "2026-02-10",
-          "clones": 2,
-          "views": 3,
-          "prs": 0,
-          "commits": 3
-        },
-        {
-          "date": "2026-02-11",
-          "clones": 2,
-          "views": 3,
-          "prs": 0,
-          "commits": 3
-        },
-        {
-          "date": "2026-02-12",
-          "clones": 2,
-          "views": 3,
-          "prs": 0,
-          "commits": 3
-        },
-        {
-          "date": "2026-02-13",
-          "clones": 2,
-          "views": 2,
-          "prs": 0,
-          "commits": 3
-        },
-        {
           "date": "2026-02-14",
-          "clones": 2,
-          "views": 2,
-          "prs": 0,
-          "commits": 3
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-15",
-          "clones": 2,
-          "views": 1,
-          "prs": 0,
-          "commits": 3
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-16",
-          "clones": 2,
-          "views": 1,
-          "prs": 0,
-          "commits": 3
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-17",
-          "clones": 2,
-          "views": 1,
-          "prs": 0,
-          "commits": 3
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-18",
-          "clones": 2,
-          "views": 1,
-          "prs": 0,
-          "commits": 3
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-19",
-          "clones": 2,
-          "views": 1,
-          "prs": 0,
-          "commits": 3
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-20",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-21",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-22",
           "clones": 0,
+          "clonesUniques": 0,
           "views": 0,
-          "prs": 0,
-          "commits": 3
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-23",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-24",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-25",
-          "clones": 0,
+          "clones": 1,
+          "clonesUniques": 1,
           "views": 0,
-          "prs": 0,
-          "commits": 3
+          "viewsUniques": 0
         },
         {
-          "date": "2026-02-28",
-          "clones": 1,
+          "date": "2026-02-26",
+          "clones": 0,
+          "clonesUniques": 0,
           "views": 0,
-          "prs": 0,
-          "commits": 3
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-27",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         }
       ],
       "totalPRs": 0,
-      "totalCommits": 3
+      "totalCommits": 3,
+      "legacyOffset": {
+        "clones": 3,
+        "views": 4
+      }
     },
     "Gemini3Flash-Powered-LiteTracker-Dashboard": {
-      "totalClones": 111,
-      "totalViews": 34,
+      "totalClones": 118,
+      "totalViews": 37,
       "totalPRs": 0,
       "totalCommits": 12,
       "history": [
         {
-          "date": "2026-02-12",
-          "clones": 107,
-          "views": 31,
-          "prs": 0,
-          "commits": 12
-        },
-        {
-          "date": "2026-02-13",
-          "clones": 107,
-          "views": 31,
-          "prs": 0,
-          "commits": 12
-        },
-        {
           "date": "2026-02-14",
-          "clones": 109,
-          "views": 31,
-          "prs": 0,
-          "commits": 12
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-15",
-          "clones": 109,
-          "views": 31,
-          "prs": 0,
-          "commits": 12
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 1,
+          "viewsUniques": 1
         },
         {
           "date": "2026-02-16",
-          "clones": 109,
-          "views": 31,
-          "prs": 0,
-          "commits": 12
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-17",
-          "clones": 110,
-          "views": 32,
-          "prs": 0,
-          "commits": 12
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-18",
-          "clones": 111,
-          "views": 32,
-          "prs": 0,
-          "commits": 12
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-19",
-          "clones": 111,
-          "views": 32,
-          "prs": 0,
-          "commits": 12
+          "clones": 2,
+          "clonesUniques": 2,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-20",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-21",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-22",
-          "clones": 9,
-          "views": 6,
-          "prs": 0,
-          "commits": 12
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-23",
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-24",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-25",
-          "clones": 8,
-          "views": 1,
-          "prs": 0,
-          "commits": 12
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
-          "date": "2026-02-28",
-          "clones": 7,
-          "views": 3,
-          "prs": 0,
-          "commits": 12
+          "date": "2026-02-26",
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 2,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-27",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         }
-      ]
+      ],
+      "legacyOffset": {
+        "clones": 111,
+        "views": 34
+      }
     },
     "Unified-Email-Solution": {
-      "totalClones": 102,
-      "totalViews": 73,
+      "totalClones": 116,
+      "totalViews": 87,
       "totalPRs": 7,
       "totalCommits": 165,
       "history": [
         {
-          "date": "2026-02-12",
-          "clones": 36,
-          "views": 36,
-          "prs": 1,
-          "commits": 165
-        },
-        {
-          "date": "2026-02-13",
-          "clones": 74,
-          "views": 62,
-          "prs": 1,
-          "commits": 165
-        },
-        {
           "date": "2026-02-14",
-          "clones": 82,
-          "views": 63,
-          "prs": 1,
-          "commits": 165
+          "clones": 4,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-15",
-          "clones": 89,
-          "views": 63,
-          "prs": 1,
-          "commits": 165
+          "clones": 5,
+          "clonesUniques": 3,
+          "views": 5,
+          "viewsUniques": 1
         },
         {
           "date": "2026-02-16",
-          "clones": 93,
-          "views": 63,
-          "prs": 1,
-          "commits": 165
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-17",
-          "clones": 98,
-          "views": 68,
-          "prs": 1,
-          "commits": 165
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-18",
-          "clones": 99,
-          "views": 68,
-          "prs": 1,
-          "commits": 165
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 4,
+          "viewsUniques": 2
         },
         {
           "date": "2026-02-19",
-          "clones": 100,
-          "views": 68,
-          "prs": 1,
-          "commits": 165
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-20",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-21",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-22",
-          "clones": 100,
-          "views": 72,
-          "prs": 7,
-          "commits": 165
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-23",
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 1,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-24",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 2,
+          "viewsUniques": 2
         },
         {
           "date": "2026-02-25",
-          "clones": 102,
-          "views": 73,
-          "prs": 7,
-          "commits": 165
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
-          "date": "2026-02-28",
-          "clones": 21,
-          "views": 13,
-          "prs": 7,
-          "commits": 165
+          "date": "2026-02-26",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 1,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-27",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 1,
+          "viewsUniques": 1
         }
-      ]
+      ],
+      "legacyOffset": {
+        "clones": 102,
+        "views": 73
+      }
     },
     "Stack-App-CLI": {
-      "totalClones": 179,
-      "totalViews": 91,
+      "totalClones": 358,
+      "totalViews": 181,
       "totalPRs": 6,
       "totalCommits": 44,
       "history": [
         {
+          "date": "2026-02-14",
+          "clones": 8,
+          "clonesUniques": 8,
+          "views": 43,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-15",
+          "clones": 161,
+          "clonesUniques": 68,
+          "views": 45,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-16",
+          "clones": 4,
+          "clonesUniques": 4,
+          "views": 2,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-17",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-18",
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
           "date": "2026-02-19",
-          "clones": 174,
-          "views": 91,
-          "prs": 6,
-          "commits": 44
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-20",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-21",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-22",
-          "clones": 175,
-          "views": 91,
-          "prs": 6,
-          "commits": 44
+          "clones": 2,
+          "clonesUniques": 2,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-23",
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-24",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-25",
-          "clones": 178,
-          "views": 91,
-          "prs": 6,
-          "commits": 44
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
-          "date": "2026-02-28",
-          "clones": 179,
-          "views": 91,
-          "prs": 6,
-          "commits": 44
+          "date": "2026-02-26",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-27",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         }
-      ]
+      ],
+      "legacyOffset": {
+        "clones": 179,
+        "views": 91
+      }
     },
     "system-pulse": {
-      "totalClones": 168,
-      "totalViews": 32,
+      "totalClones": 179,
+      "totalViews": 49,
       "totalPRs": 0,
       "totalCommits": 0,
       "history": [
         {
+          "date": "2026-02-14",
+          "clones": 4,
+          "clonesUniques": 4,
+          "views": 14,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-15",
+          "clones": 3,
+          "clonesUniques": 2,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-16",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-17",
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-18",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
           "date": "2026-02-19",
-          "clones": 166,
-          "views": 31,
-          "prs": 0,
-          "commits": 0
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-20",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-21",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-22",
-          "clones": 167,
-          "views": 31,
-          "prs": 0,
-          "commits": 0
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-23",
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 1,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-24",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 1,
+          "viewsUniques": 1
         },
         {
           "date": "2026-02-25",
-          "clones": 168,
-          "views": 32,
-          "prs": 0,
-          "commits": 0
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
-          "date": "2026-02-28",
-          "clones": 110,
-          "views": 23,
-          "prs": 0,
-          "commits": 0
+          "date": "2026-02-26",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 1,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-27",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         }
-      ]
+      ],
+      "legacyOffset": {
+        "clones": 168,
+        "views": 32
+      }
     },
     "VSCE-Guardian-Secrets-Scanner": {
-      "totalClones": 13,
-      "totalViews": 42,
+      "totalClones": 26,
+      "totalViews": 85,
       "totalPRs": 0,
       "totalCommits": 36,
       "history": [
         {
-          "date": "2026-02-19",
+          "date": "2026-02-14",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-15",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-16",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-17",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 14,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-18",
           "clones": 8,
-          "views": 30,
-          "prs": 0,
-          "commits": 36
+          "clonesUniques": 8,
+          "views": 16,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-19",
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 1,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-20",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 2,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-21",
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 1,
+          "viewsUniques": 1
         },
         {
           "date": "2026-02-22",
-          "clones": 9,
-          "views": 33,
-          "prs": 0,
-          "commits": 36
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 2,
+          "viewsUniques": 2
+        },
+        {
+          "date": "2026-02-23",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 2,
+          "viewsUniques": 2
+        },
+        {
+          "date": "2026-02-24",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 1,
+          "viewsUniques": 1
         },
         {
           "date": "2026-02-25",
-          "clones": 11,
-          "views": 38,
-          "prs": 0,
-          "commits": 36
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 1,
+          "viewsUniques": 1
         },
         {
-          "date": "2026-02-28",
-          "clones": 13,
-          "views": 42,
-          "prs": 0,
-          "commits": 36
+          "date": "2026-02-26",
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 2,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-27",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 1,
+          "viewsUniques": 1
         }
-      ]
+      ],
+      "legacyOffset": {
+        "clones": 13,
+        "views": 42
+      }
     },
     "MD-Files-Connector": {
-      "totalClones": 104,
-      "totalViews": 78,
+      "totalClones": 208,
+      "totalViews": 156,
       "totalPRs": 0,
       "totalCommits": 0,
       "history": [
         {
-          "date": "2026-02-22",
+          "date": "2026-02-14",
           "clones": 0,
+          "clonesUniques": 0,
           "views": 0,
-          "prs": 0,
-          "commits": 0
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-15",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-16",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-17",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-18",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-19",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-20",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-21",
+          "clones": 86,
+          "clonesUniques": 31,
+          "views": 50,
+          "viewsUniques": 2
+        },
+        {
+          "date": "2026-02-22",
+          "clones": 14,
+          "clonesUniques": 8,
+          "views": 4,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-23",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 24,
+          "viewsUniques": 12
+        },
+        {
+          "date": "2026-02-24",
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
           "date": "2026-02-25",
-          "clones": 100,
-          "views": 78,
-          "prs": 0,
-          "commits": 0
+          "clones": 2,
+          "clonesUniques": 2,
+          "views": 0,
+          "viewsUniques": 0
         },
         {
-          "date": "2026-02-28",
-          "clones": 104,
-          "views": 78,
-          "prs": 0,
-          "commits": 0
+          "date": "2026-02-26",
+          "clones": 1,
+          "clonesUniques": 1,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-27",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
         }
-      ]
+      ],
+      "legacyOffset": {
+        "clones": 104,
+        "views": 78
+      }
     },
     "Prompt-Run": {
-      "totalClones": 52,
-      "totalViews": 10,
+      "totalClones": 227,
+      "totalViews": 61,
       "totalPRs": 4,
       "totalCommits": 28,
       "history": [
         {
-          "date": "2026-02-28",
-          "clones": 52,
-          "views": 10,
-          "prs": 4,
-          "commits": 28
+          "date": "2026-02-14",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-15",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-16",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-17",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-18",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-19",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-20",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-21",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-22",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-23",
+          "clones": 15,
+          "clonesUniques": 1,
+          "views": 3,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-24",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 1,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-25",
+          "clones": 0,
+          "clonesUniques": 0,
+          "views": 0,
+          "viewsUniques": 0
+        },
+        {
+          "date": "2026-02-26",
+          "clones": 37,
+          "clonesUniques": 1,
+          "views": 6,
+          "viewsUniques": 1
+        },
+        {
+          "date": "2026-02-27",
+          "clones": 123,
+          "clonesUniques": 45,
+          "views": 41,
+          "viewsUniques": 2
         }
-      ]
+      ],
+      "legacyOffset": {
+        "clones": 52,
+        "views": 10
+      }
     }
   },
-  "totalPRs": 94,
-  "totalCommits": 940,
-  "totalContributions": 1880
+  "totalPRs": 96,
+  "totalCommits": 944,
+  "totalContributions": 1904,
+  "schemaVersion": 2
 }
