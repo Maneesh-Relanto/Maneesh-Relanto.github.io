@@ -89,7 +89,7 @@ document.querySelectorAll('section, .project-card, .expertise-card, .achievement
 });
 
 // GitHub Stats Integration - Using Historical Data Only
-const GITHUB_USERNAME = 'Maneesh-Relanto';
+const GITHUB_USERNAME = 'maneesh-kumar-thakur';
 
 // All stats are read from traffic-history.json (updated daily by GitHub Actions)
 console.log('📊 Loading stats from historical data file...');
