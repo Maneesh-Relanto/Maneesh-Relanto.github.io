@@ -24,7 +24,7 @@ jobs:
       - name: Collect traffic statistics
         env:
           GITHUB_TOKEN: ${{ secrets.STATS_TOKEN }}
-          GITHUB_USERNAME: Maneesh-Relanto
+          GITHUB_USERNAME: maneesh-kumar-thakur
         run: node scripts/collect-traffic-stats.js
       
       - name: Commit and push if changed

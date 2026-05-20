@@ -28,10 +28,10 @@ const fs = require('fs');
 const path = require('path');
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || process.env.STATS_TOKEN;
-const GITHUB_USERNAME = process.env.GITHUB_USERNAME || 'Maneesh-Relanto';
+const GITHUB_USERNAME = process.env.GITHUB_USERNAME || 'maneesh-kumar-thakur';
 const GITHUB_API_BASE = 'https://api.github.com';
 const DATA_FILE = path.join(__dirname, '../data/traffic-history.json');
-const PORTFOLIO_REPO = 'Maneesh-Relanto.github.io'; // Exclude this repo from tracking
+const PORTFOLIO_REPO = 'maneesh-kumar-thakur.github.io'; // Exclude this repo from tracking
 const EXCLUDED_REPOS = [
     'AWS---Hackathon---KIRO' // Excluded from tracking
 ];
